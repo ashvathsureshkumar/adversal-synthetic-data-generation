@@ -1,0 +1,26 @@
+{
+  "s3": {
+    "total_objects": 12,
+    "datasets_stored": 2,
+    "synthetic_stored": 1,
+    "storage_gb": 0.00023640599101781845,
+    "recent_uploads": 12,
+    "status": "Connected"
+  },
+  "neo4j": {
+    "total_nodes": 0,
+    "total_relationships": 0,
+    "datasets": 0,
+    "generation_runs": 0,
+    "audit_trails": 0,
+    "status": "Failed"
+  },
+  "weaviate": {
+    "total_objects": 3,
+    "collections": 1,
+    "search_queries": 0,
+    "similarity_finds": 0,
+    "status": "Connected"
+  },
+  "last_updated": "2025-09-16T15:35:00.336556"
+}

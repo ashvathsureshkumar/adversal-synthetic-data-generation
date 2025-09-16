@@ -32,6 +32,9 @@ from data.preprocessor import DataPreprocessor
 from databases.neo4j_client import Neo4jManager, DataLineageTracker
 from aws.s3_manager import S3Manager
 
+# Additional imports for real workflow
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "src"))
+
 # Global managers (initialized on first use)
 _s3_manager = None
 _neo4j_manager = None
@@ -261,28 +264,70 @@ def generate_synthetic_data(
         _, lineage_tracker = get_neo4j_manager()
         run_id = f"generation_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
-        # For demo purposes, create synthetic data using statistical sampling
-        # In production, this would use the actual GAN models
-        synthetic_data = pd.DataFrame()
+        # REAL GAN WORKFLOW: Use actual SyntheticDataPipeline
+        from main import SyntheticDataPipeline
+        import yaml
+        import tempfile
         
-        for col in data.columns:
-            if data[col].dtype in ['object', 'category']:
-                # Categorical: sample with replacement
-                synthetic_data[col] = np.random.choice(
-                    data[col].dropna().unique(), 
-                    size=num_samples, 
-                    replace=True
-                )
-            else:
-                # Numerical: add noise to maintain privacy
-                mean = data[col].mean()
-                std = data[col].std()
-                noise_scale = privacy_epsilon if enable_privacy else 0.1
-                synthetic_data[col] = np.random.normal(
-                    mean, 
-                    std * noise_scale, 
-                    size=num_samples
-                )
+        # Create temporary config for the pipeline
+        config = {
+            'model': {
+                'type': 'wgan_gp',
+                'noise_dim': 100,
+                'generator_hidden_dims': [128, 256],
+                'discriminator_hidden_dims': [256, 128]
+            },
+            'training': {
+                'batch_size': 32,
+                'num_epochs': 15,  # Reduced for faster demo
+                'learning_rate': 0.0002,
+                'n_critic': 5
+            },
+            'fairness': {
+                'enabled': enable_fairness,
+                'protected_attributes': [fairness_target] if fairness_target else [],
+                'fairness_lambda': 0.1
+            },
+            'privacy': {
+                'enabled': enable_privacy,
+                'epsilon': privacy_epsilon,
+                'delta': 1e-5
+            },
+            'databases': {
+                'weaviate': {'enabled': True},
+                'neo4j': {'enabled': True}
+            }
+        }
+        
+        # Save config to temp file
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.yaml', delete=False) as f:
+            yaml.dump(config, f)
+            config_path = f.name
+        
+        try:
+            # Initialize and run the real pipeline
+            pipeline = SyntheticDataPipeline(config_path)
+            
+            # Load and preprocess data
+            processed_data = pipeline.load_and_preprocess_data(local_path)
+            
+            # Train the actual GAN model
+            model = pipeline.train_model(processed_data)
+            
+            # Generate synthetic data with the trained model
+            synthetic_data = pipeline.generate_synthetic_data(
+                model, 
+                num_samples=num_samples, 
+                original_data=processed_data
+            )
+            
+            # Store in vector database
+            pipeline.store_in_vector_database(processed_data, "real")
+            pipeline.store_in_vector_database(synthetic_data, "synthetic")
+            
+        finally:
+            # Cleanup temp config
+            os.unlink(config_path)
         
         # Apply fairness constraints if enabled
         if enable_fairness and fairness_target:
