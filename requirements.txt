@@ -1,0 +1,39 @@
+# Core ML and Data Processing
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Database Integrations
+weaviate-client>=3.25.0
+neo4j>=5.13.0
+
+# Web Framework and Dashboard
+streamlit>=1.28.0
+plotly>=5.17.0
+
+# AWS Integration
+boto3>=1.29.0
+sagemaker>=2.190.0
+
+# Privacy and Fairness
+opacus>=1.4.0
+fairlearn>=0.9.0
+
+# Utilities
+tqdm>=4.66.0
+python-dotenv>=1.0.0
+pyyaml>=6.0
+click>=8.1.0
+
+# Development and Testing
+pytest>=7.4.0
+black>=23.0.0
+flake8>=6.0.0
+jupyter>=1.0.0
+
+# Optional: Strands Agents (will need to verify actual package name)
+# strands-agents

@@ -1,0 +1,67 @@
+# Adversarial-Aware Synthetic Data Generator Configuration
+
+# Model Configuration
+model:
+  type: "wgan_gp"  # Options: "cgan", "wgan_gp"
+  generator_dim: 128
+  discriminator_dim: 128
+  noise_dim: 100
+  num_epochs: 1000
+  batch_size: 64
+  learning_rate: 0.0002
+  beta1: 0.5
+  beta2: 0.999
+  
+# WGAN-GP Specific
+wgan_gp:
+  lambda_gp: 10  # Gradient penalty weight
+  n_critic: 5    # Number of critic updates per generator update
+
+# Fairness and Privacy
+fairness:
+  enabled: true
+  constraint_weight: 0.1
+  protected_attributes: ["gender", "race", "age_group"]
+  fairness_metric: "demographic_parity"  # Options: "demographic_parity", "equalized_odds"
+
+privacy:
+  enabled: true
+  epsilon: 1.0  # Differential privacy epsilon
+  delta: 1e-5   # Differential privacy delta
+  
+# Database Configuration
+databases:
+  weaviate:
+    enabled: true
+    class_name: "SyntheticData"
+    vectorizer: "text2vec-transformers"
+    
+  neo4j:
+    enabled: true
+    database: "0524309b"
+    
+# Data Processing
+data:
+  categorical_threshold: 10  # Max unique values for categorical encoding
+  numerical_scaling: "standard"  # Options: "standard", "minmax", "robust"
+  handle_missing: "median"  # Options: "mean", "median", "mode", "drop"
+  
+# Training
+training:
+  save_interval: 100  # Save model every N epochs
+  log_interval: 10    # Log metrics every N epochs
+  early_stopping:
+    enabled: true
+    patience: 50
+    min_delta: 0.001
+    
+# Generation
+generation:
+  default_samples: 1000
+  quality_metrics: ["wasserstein_distance", "mmd", "coverage"]
+  
+# Streamlit Dashboard
+dashboard:
+  title: "Adversarial-Aware Synthetic Data Generator"
+  max_upload_size: 100  # MB
+  default_plots: ["distribution", "correlation", "pca"]

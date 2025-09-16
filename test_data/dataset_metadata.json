@@ -1,0 +1,53 @@
+{
+  "biased_loan_applications.csv": {
+    "description": "Loan application dataset with systematic gender and racial bias",
+    "bias_level": "high",
+    "sensitive_attributes": [
+      "gender",
+      "race"
+    ],
+    "target_variable": "approved",
+    "bias_detected": {
+      "gender_disparity": 0.47,
+      "racial_disparity": 0.38,
+      "age_bias": "moderate"
+    },
+    "recommended_actions": [
+      "Apply demographic parity constraints",
+      "Use fairness-aware synthetic data generation",
+      "Enable differential privacy with \u03b5=1.0"
+    ]
+  },
+  "healthcare_outcomes.csv": {
+    "description": "Healthcare treatment outcomes with insurance and gender bias",
+    "bias_level": "moderate",
+    "sensitive_attributes": [
+      "gender",
+      "insurance_type"
+    ],
+    "target_variable": "treatment_success",
+    "bias_detected": {
+      "insurance_bias": "high",
+      "gender_bias": "moderate"
+    }
+  },
+  "employment_decisions.csv": {
+    "description": "Employment hiring decisions with age and gender discrimination",
+    "bias_level": "high",
+    "sensitive_attributes": [
+      "gender",
+      "age"
+    ],
+    "target_variable": "hired",
+    "bias_detected": {
+      "gender_bias": "high",
+      "age_discrimination": "high"
+    }
+  },
+  "small_clean_dataset.csv": {
+    "description": "Small balanced dataset for quick testing and demos",
+    "bias_level": "low",
+    "sensitive_attributes": [],
+    "target_variable": "target"
+  }
+}
