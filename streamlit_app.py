@@ -23,7 +23,7 @@ from datetime import datetime
 # Configure page
 st.set_page_config(
     page_title="Adversarial-Aware Synthetic Data Generator",
-    page_icon="🧬",
+    page_icon="",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -62,36 +62,36 @@ if 'fairness_results' not in st.session_state:
 
 def main():
     # Main header
-    st.markdown('<h1 class="main-header">🧬 Adversarial-Aware Synthetic Data Generator</h1>', 
+    st.markdown('<h1 class="main-header"> Adversarial-Aware Synthetic Data Generator</h1>', 
                 unsafe_allow_html=True)
     
     # Sidebar navigation
     with st.sidebar:
-        st.title("🚀 Navigation")
+        st.title(" Navigation")
         page = st.selectbox(
             "Choose a section:",
-            ["📊 Data Upload", "🤖 Model Training", "⚡ Generate Data", 
-             "📈 Analytics", "⚖️ Fairness Audit", "🔒 Privacy Analysis", "☁️ Cloud Deploy"]
+            [" Data Upload", " Model Training", " Generate Data", 
+             " Analytics", "️ Fairness Audit", " Privacy Analysis", "️ Cloud Deploy"]
         )
     
     # Route to appropriate page
-    if page == "📊 Data Upload":
+    if page == " Data Upload":
         data_upload_page()
-    elif page == "🤖 Model Training":
+    elif page == " Model Training":
         model_training_page()
-    elif page == "⚡ Generate Data":
+    elif page == " Generate Data":
         data_generation_page()
-    elif page == "📈 Analytics":
+    elif page == " Analytics":
         analytics_page()
-    elif page == "⚖️ Fairness Audit":
+    elif page == "️ Fairness Audit":
         fairness_audit_page()
-    elif page == "🔒 Privacy Analysis":
+    elif page == " Privacy Analysis":
         privacy_analysis_page()
-    elif page == "☁️ Cloud Deploy":
+    elif page == "️ Cloud Deploy":
         cloud_deployment_page()
 
 def data_upload_page():
-    st.header("📊 Data Upload & Preprocessing")
+    st.header(" Data Upload & Preprocessing")
     
     col1, col2 = st.columns([2, 1])
     
@@ -114,7 +114,7 @@ def data_upload_page():
                     df = pd.read_parquet(uploaded_file)
                 
                 st.session_state.uploaded_data = df
-                st.success(f"✅ Data loaded successfully! Shape: {df.shape}")
+                st.success(f" Data loaded successfully! Shape: {df.shape}")
                 
                 # Display basic info
                 st.subheader("Dataset Overview")
@@ -132,7 +132,7 @@ def data_upload_page():
                 st.dataframe(df.head(), use_container_width=True)
                 
                 # Data preprocessing options
-                st.subheader("⚙️ Preprocessing Options")
+                st.subheader("️ Preprocessing Options")
                 
                 # Column type detection
                 categorical_cols = st.multiselect(
@@ -160,7 +160,7 @@ def data_upload_page():
         if st.session_state.uploaded_data is not None:
             df = st.session_state.uploaded_data
             
-            st.subheader("📈 Quick Stats")
+            st.subheader(" Quick Stats")
             
             # Data types distribution
             dtype_counts = df.dtypes.value_counts()
@@ -173,7 +173,7 @@ def data_upload_page():
             
             # Missing values heatmap
             if df.isnull().sum().sum() > 0:
-                st.subheader("🔍 Missing Values")
+                st.subheader(" Missing Values")
                 missing_data = df.isnull().sum()
                 missing_data = missing_data[missing_data > 0].sort_values(ascending=False)
                 
@@ -186,10 +186,10 @@ def data_upload_page():
                 st.plotly_chart(fig_missing, use_container_width=True)
 
 def model_training_page():
-    st.header("🤖 Model Training")
+    st.header(" Model Training")
     
     if st.session_state.uploaded_data is None:
-        st.warning("⚠️ Please upload data first!")
+        st.warning("️ Please upload data first!")
         return
     
     df = st.session_state.uploaded_data
@@ -197,7 +197,7 @@ def model_training_page():
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.subheader("🔧 Model Configuration")
+        st.subheader(" Model Configuration")
         
         # Model selection
         model_type = st.selectbox(
@@ -207,7 +207,7 @@ def model_training_page():
         )
         
         # Training parameters
-        st.subheader("⚙️ Training Parameters")
+        st.subheader("️ Training Parameters")
         
         col_a, col_b = st.columns(2)
         with col_a:
@@ -221,7 +221,7 @@ def model_training_page():
             n_critic = st.slider("Critic Updates per Generator", 1, 10, 5)
         
         # Fairness and Privacy settings
-        st.subheader("⚖️ Fairness & Privacy")
+        st.subheader("️ Fairness & Privacy")
         
         col_c, col_d = st.columns(2)
         with col_c:
@@ -233,7 +233,7 @@ def model_training_page():
             privacy_epsilon = st.slider("Privacy Epsilon", 0.1, 10.0, 1.0)
         
         # Start training button
-        if st.button("🚀 Start Training", type="primary"):
+        if st.button(" Start Training", type="primary"):
             with st.spinner("Training model... This may take a while."):
                 training_config = {
                     'model_type': model_type.lower().replace('-', '_'),
@@ -253,14 +253,14 @@ def model_training_page():
                 success = simulate_training(df, training_config)
                 
                 if success:
-                    st.success("✅ Model trained successfully!")
+                    st.success(" Model trained successfully!")
                     st.session_state.trained_model = training_config
                     st.balloons()
                 else:
-                    st.error("❌ Training failed!")
+                    st.error(" Training failed!")
     
     with col2:
-        st.subheader("📊 Training Progress")
+        st.subheader(" Training Progress")
         
         if st.session_state.trained_model:
             # Show training metrics (simulated)
@@ -291,20 +291,20 @@ def model_training_page():
             st.plotly_chart(fig_training, use_container_width=True)
             
             # Model summary
-            st.subheader("🎯 Model Summary")
+            st.subheader(" Model Summary")
             st.json(st.session_state.trained_model)
 
 def data_generation_page():
-    st.header("⚡ Generate Synthetic Data")
+    st.header(" Generate Synthetic Data")
     
     if st.session_state.trained_model is None:
-        st.warning("⚠️ Please train a model first!")
+        st.warning("️ Please train a model first!")
         return
     
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        st.subheader("🎛️ Generation Settings")
+        st.subheader("️ Generation Settings")
         
         num_samples = st.slider(
             "Number of samples to generate:",
@@ -313,11 +313,11 @@ def data_generation_page():
         
         # Conditional generation options
         if st.session_state.trained_model['model_type'] == 'conditional_gan':
-            st.subheader("🎯 Conditional Settings")
+            st.subheader(" Conditional Settings")
             # Add conditional controls here
             pass
         
-        if st.button("🎲 Generate Synthetic Data", type="primary"):
+        if st.button(" Generate Synthetic Data", type="primary"):
             with st.spinner("Generating synthetic data..."):
                 # Simulate generation
                 synthetic_df = simulate_generation(
@@ -325,11 +325,11 @@ def data_generation_page():
                     num_samples
                 )
                 st.session_state.synthetic_data = synthetic_df
-                st.success(f"✅ Generated {len(synthetic_df)} synthetic samples!")
+                st.success(f" Generated {len(synthetic_df)} synthetic samples!")
     
     with col2:
         if st.session_state.synthetic_data is not None:
-            st.subheader("📊 Generated Data Preview")
+            st.subheader(" Generated Data Preview")
             
             synthetic_df = st.session_state.synthetic_data
             original_df = st.session_state.uploaded_data
@@ -338,7 +338,7 @@ def data_generation_page():
             st.dataframe(synthetic_df.head(), use_container_width=True)
             
             # Quick comparison
-            st.subheader("📈 Quick Comparison")
+            st.subheader(" Quick Comparison")
             
             # Select a numeric column for comparison
             numeric_cols = synthetic_df.select_dtypes(include=[np.number]).columns
@@ -369,17 +369,17 @@ def data_generation_page():
                 st.plotly_chart(fig_comparison, use_container_width=True)
 
 def analytics_page():
-    st.header("📈 Data Quality Analytics")
+    st.header(" Data Quality Analytics")
     
     if st.session_state.synthetic_data is None:
-        st.warning("⚠️ Please generate synthetic data first!")
+        st.warning("️ Please generate synthetic data first!")
         return
     
     original_df = st.session_state.uploaded_data
     synthetic_df = st.session_state.synthetic_data
     
     # Quality metrics
-    st.subheader("🎯 Quality Metrics")
+    st.subheader(" Quality Metrics")
     
     col1, col2, col3, col4 = st.columns(4)
     
@@ -393,9 +393,9 @@ def analytics_page():
         st.metric("Privacy Risk", "Low", "-15%")
     
     # Detailed comparisons
-    st.subheader("📊 Detailed Analysis")
+    st.subheader(" Detailed Analysis")
     
-    tab1, tab2, tab3 = st.tabs(["📈 Distributions", "🔗 Correlations", "📋 Statistics"])
+    tab1, tab2, tab3 = st.tabs([" Distributions", " Correlations", " Statistics"])
     
     with tab1:
         # Distribution comparison for all numeric columns
@@ -476,14 +476,14 @@ def analytics_page():
         st.dataframe(comparison_df, use_container_width=True)
 
 def fairness_audit_page():
-    st.header("⚖️ Fairness Audit")
+    st.header("️ Fairness Audit")
     
     if st.session_state.synthetic_data is None:
-        st.warning("⚠️ Please generate synthetic data first!")
+        st.warning("️ Please generate synthetic data first!")
         return
     
     # Simulated fairness analysis
-    st.subheader("📊 Fairness Metrics Dashboard")
+    st.subheader(" Fairness Metrics Dashboard")
     
     col1, col2 = st.columns([2, 1])
     
@@ -512,7 +512,7 @@ def fairness_audit_page():
         st.plotly_chart(fig_fairness, use_container_width=True)
     
     with col2:
-        st.subheader("🎯 Overall Score")
+        st.subheader(" Overall Score")
         overall_score = np.mean(list(fairness_metrics.values()))
         
         if overall_score >= 0.9:
@@ -522,19 +522,19 @@ def fairness_audit_page():
         else:
             st.error(f"Needs Improvement: {overall_score:.2f}")
         
-        st.subheader("📋 Recommendations")
-        st.info("✅ Demographic parity is well maintained")
-        st.warning("⚠️ Consider improving equal opportunity")
-        st.info("✅ Individual fairness looks good")
+        st.subheader(" Recommendations")
+        st.info(" Demographic parity is well maintained")
+        st.warning("️ Consider improving equal opportunity")
+        st.info(" Individual fairness looks good")
 
 def privacy_analysis_page():
-    st.header("🔒 Privacy Analysis")
+    st.header(" Privacy Analysis")
     
     if st.session_state.synthetic_data is None:
-        st.warning("⚠️ Please generate synthetic data first!")
+        st.warning("️ Please generate synthetic data first!")
         return
     
-    st.subheader("🛡️ Privacy Risk Assessment")
+    st.subheader("️ Privacy Risk Assessment")
     
     col1, col2 = st.columns(2)
     
@@ -567,7 +567,7 @@ def privacy_analysis_page():
         st.plotly_chart(fig_privacy, use_container_width=True)
     
     with col2:
-        st.subheader("📊 Risk Level")
+        st.subheader(" Risk Level")
         overall_risk = privacy_metrics['Overall Privacy Risk']
         
         if overall_risk <= 0.2:
@@ -577,20 +577,20 @@ def privacy_analysis_page():
         else:
             st.error(f"High Risk: {overall_risk:.2f}")
         
-        st.subheader("🔍 Privacy Analysis")
-        st.info("✅ Differential privacy applied with ε=1.0")
-        st.info("✅ Low membership inference risk")
-        st.success("🎯 Privacy requirements satisfied")
+        st.subheader(" Privacy Analysis")
+        st.info(" Differential privacy applied with ε=1.0")
+        st.info(" Low membership inference risk")
+        st.success(" Privacy requirements satisfied")
 
 def cloud_deployment_page():
-    st.header("☁️ Cloud Deployment")
+    st.header("️ Cloud Deployment")
     
-    st.subheader("🚀 AWS SageMaker Integration")
+    st.subheader(" AWS SageMaker Integration")
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("⚙️ Deployment Configuration")
+        st.subheader("️ Deployment Configuration")
         
         instance_type = st.selectbox(
             "Instance Type:",
@@ -599,15 +599,15 @@ def cloud_deployment_page():
         
         auto_scaling = st.checkbox("Enable Auto Scaling")
         
-        if st.button("🚀 Deploy to SageMaker"):
+        if st.button(" Deploy to SageMaker"):
             with st.spinner("Deploying to AWS..."):
                 # Simulate deployment
                 time.sleep(3)
-                st.success("✅ Model deployed successfully!")
+                st.success(" Model deployed successfully!")
                 st.info("Endpoint: synthetic-data-endpoint-2024")
     
     with col2:
-        st.subheader("📊 Resource Usage")
+        st.subheader(" Resource Usage")
         
         # Simulated metrics
         st.metric("CPU Usage", "45%", "5%")

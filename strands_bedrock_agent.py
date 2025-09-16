@@ -162,23 +162,23 @@ def create_synthetic_dataset(
             race_rates = data.groupby('race')['outcome'].mean()
             race_disparity = race_rates.max() - race_rates.min()
             
-            bias_analysis.append(f"📊 Bias Analysis:")
+            bias_analysis.append(f" Bias Analysis:")
             bias_analysis.append(f"   • Gender disparity: {gender_disparity:.3f} ({gender_disparity/gender_rates.mean():.1%} relative)")
             bias_analysis.append(f"   • Racial disparity: {race_disparity:.3f} ({race_disparity/race_rates.mean():.1%} relative)")
             
             for gender, rate in gender_rates.items():
                 bias_analysis.append(f"   • {gender} approval rate: {rate:.1%}")
             
-        return f"✅ Synthetic dataset '{dataset_name}' created successfully!\n" \
-               f"📊 Shape: {data.shape}\n" \
-               f"📋 Columns: {list(data.columns)}\n" \
-               f"💾 Saved to: {filename}\n" \
-               f"🎯 Bias level: {bias_level}\n" \
-               f"⚠️ Contains {data['outcome'].mean():.1%} positive outcomes\n" + \
+        return f" Synthetic dataset '{dataset_name}' created successfully!\n" \
+               f" Shape: {data.shape}\n" \
+               f" Columns: {list(data.columns)}\n" \
+               f" Saved to: {filename}\n" \
+               f" Bias level: {bias_level}\n" \
+               f"️ Contains {data['outcome'].mean():.1%} positive outcomes\n" + \
                ("\n" + "\n".join(bias_analysis) if bias_analysis else "")
                
     except Exception as e:
-        return f"❌ Error creating dataset: {str(e)}"
+        return f" Error creating dataset: {str(e)}"
 
 @tool  
 def audit_fairness_violations(dataset_name: str, protected_attribute: str = "gender") -> str:
@@ -207,23 +207,23 @@ def audit_fairness_violations(dataset_name: str, protected_attribute: str = "gen
         except:
             # Fallback to local file
             if not os.path.exists(filename):
-                return f"❌ Dataset '{dataset_name}' not found. Create it first with create_synthetic_dataset()."
+                return f" Dataset '{dataset_name}' not found. Create it first with create_synthetic_dataset()."
             data = pd.read_csv(filename)
         
         if protected_attribute not in data.columns:
-            return f"❌ Protected attribute '{protected_attribute}' not found in dataset."
+            return f" Protected attribute '{protected_attribute}' not found in dataset."
         
         audit_report = []
-        audit_report.append(f"⚖️ Fairness Audit Report: {dataset_name}")
+        audit_report.append(f"️ Fairness Audit Report: {dataset_name}")
         audit_report.append("=" * 60)
-        audit_report.append(f"🎯 Protected Attribute: {protected_attribute}")
-        audit_report.append(f"📊 Total Records: {len(data):,}")
+        audit_report.append(f" Protected Attribute: {protected_attribute}")
+        audit_report.append(f" Total Records: {len(data):,}")
         
         # 1. Demographic Parity Analysis
         group_rates = data.groupby(protected_attribute)['outcome'].agg(['mean', 'count'])
         overall_rate = data['outcome'].mean()
         
-        audit_report.append(f"\n📈 Demographic Parity Analysis:")
+        audit_report.append(f"\n Demographic Parity Analysis:")
         audit_report.append(f"   Overall approval rate: {overall_rate:.1%}")
         
         violations = []
@@ -245,7 +245,7 @@ def audit_fairness_violations(dataset_name: str, protected_attribute: str = "gen
                 tp_by_group = true_positives.groupby(protected_attribute).size()
                 total_by_group = data.groupby(protected_attribute).size()
                 
-                audit_report.append(f"\n📊 Equalized Odds Analysis:")
+                audit_report.append(f"\n Equalized Odds Analysis:")
                 for group in data[protected_attribute].unique():
                     tp_rate = tp_by_group.get(group, 0) / total_by_group[group]
                     audit_report.append(f"   • {group} true positive rate: {tp_rate:.1%}")
@@ -256,41 +256,41 @@ def audit_fairness_violations(dataset_name: str, protected_attribute: str = "gen
         contingency_table = pd.crosstab(data[protected_attribute], data['outcome'])
         chi2, p_value, dof, expected = chi2_contingency(contingency_table)
         
-        audit_report.append(f"\n🔬 Statistical Significance:")
+        audit_report.append(f"\n Statistical Significance:")
         audit_report.append(f"   • Chi-square statistic: {chi2:.3f}")
         audit_report.append(f"   • P-value: {p_value:.6f}")
         audit_report.append(f"   • Result: {'Statistically significant bias detected' if p_value < 0.05 else 'No significant bias detected'}")
         
         # 4. Recommendations
-        audit_report.append(f"\n🎯 Fairness Violations Found: {len(violations)}")
+        audit_report.append(f"\n Fairness Violations Found: {len(violations)}")
         if violations:
-            audit_report.append(f"⚠️ VIOLATIONS DETECTED:")
+            audit_report.append(f"️ VIOLATIONS DETECTED:")
             for violation in violations:
                 audit_report.append(f"   • {violation}")
             
-            audit_report.append(f"\n💡 Recommendations:")
+            audit_report.append(f"\n Recommendations:")
             audit_report.append(f"   • Use fairness-constrained synthetic data generation")
             audit_report.append(f"   • Apply demographic parity constraints")
             audit_report.append(f"   • Re-train models with bias mitigation techniques")
             audit_report.append(f"   • Implement equalized odds post-processing")
         else:
-            audit_report.append(f"✅ No significant fairness violations detected")
+            audit_report.append(f" No significant fairness violations detected")
         
         # 5. Compliance Status
         compliance_score = max(0, 100 - (len(violations) * 20))
-        audit_report.append(f"\n📋 Compliance Score: {compliance_score}/100")
+        audit_report.append(f"\n Compliance Score: {compliance_score}/100")
         
         if compliance_score >= 80:
-            audit_report.append(f"✅ COMPLIANT - Dataset meets fairness standards")
+            audit_report.append(f" COMPLIANT - Dataset meets fairness standards")
         elif compliance_score >= 60:
-            audit_report.append(f"⚠️ WARNING - Minor fairness issues detected")
+            audit_report.append(f"️ WARNING - Minor fairness issues detected")
         else:
-            audit_report.append(f"❌ NON-COMPLIANT - Significant bias detected")
+            audit_report.append(f" NON-COMPLIANT - Significant bias detected")
         
         return "\n".join(audit_report)
         
     except Exception as e:
-        return f"❌ Error auditing fairness: {str(e)}"
+        return f" Error auditing fairness: {str(e)}"
 
 @tool
 def generate_fair_synthetic_data(
@@ -327,7 +327,7 @@ def generate_fair_synthetic_data(
                 raise Exception("Not in S3")
         except:
             if not os.path.exists(filename):
-                return f"❌ Source dataset '{source_dataset}' not found."
+                return f" Source dataset '{source_dataset}' not found."
             data = pd.read_csv(filename)
         
         # Auto-detect protected attributes if not specified
@@ -418,16 +418,16 @@ def generate_fair_synthetic_data(
         
         # Calculate fairness metrics
         fairness_report = []
-        fairness_report.append(f"✅ Fair synthetic data generated successfully!")
-        fairness_report.append(f"🎯 Source: {source_dataset}")
-        fairness_report.append(f"📊 Samples: {num_samples:,}")
-        fairness_report.append(f"⚖️ Fairness: {fairness_constraint}")
-        fairness_report.append(f"🔒 Privacy: ε = {privacy_epsilon}")
-        fairness_report.append(f"💾 Saved to: {synth_filename}")
+        fairness_report.append(f" Fair synthetic data generated successfully!")
+        fairness_report.append(f" Source: {source_dataset}")
+        fairness_report.append(f" Samples: {num_samples:,}")
+        fairness_report.append(f"️ Fairness: {fairness_constraint}")
+        fairness_report.append(f" Privacy: ε = {privacy_epsilon}")
+        fairness_report.append(f" Saved to: {synth_filename}")
         
         # Compare fairness metrics
         if protected_attributes and 'outcome' in synthetic_data.columns:
-            fairness_report.append(f"\n📊 Fairness Metrics Comparison:")
+            fairness_report.append(f"\n Fairness Metrics Comparison:")
             
             for attr in protected_attributes:
                 if attr in data.columns and attr in synthetic_data.columns:
@@ -441,12 +441,12 @@ def generate_fair_synthetic_data(
                     
                     if synth_disparity < orig_disparity:
                         improvement = (orig_disparity - synth_disparity) / orig_disparity * 100
-                        fairness_report.append(f"   ✅ {improvement:.1f}% bias reduction achieved")
+                        fairness_report.append(f"    {improvement:.1f}% bias reduction achieved")
                     else:
-                        fairness_report.append(f"   ⚠️ Consider stronger fairness constraints")
+                        fairness_report.append(f"   ️ Consider stronger fairness constraints")
         
         # Privacy guarantees
-        fairness_report.append(f"\n🔒 Privacy Guarantees:")
+        fairness_report.append(f"\n Privacy Guarantees:")
         fairness_report.append(f"   • Differential privacy applied with ε = {privacy_epsilon}")
         fairness_report.append(f"   • Statistical noise added to all numerical features")
         fairness_report.append(f"   • No direct individual identifiers included")
@@ -455,7 +455,7 @@ def generate_fair_synthetic_data(
         return "\n".join(fairness_report)
         
     except Exception as e:
-        return f"❌ Error generating fair synthetic data: {str(e)}"
+        return f" Error generating fair synthetic data: {str(e)}"
 
 @tool
 def validate_synthetic_quality(original_dataset: str, synthetic_dataset: str = None) -> str:
@@ -472,7 +472,7 @@ def validate_synthetic_quality(original_dataset: str, synthetic_dataset: str = N
     try:
         orig_file = f"/tmp/{original_dataset}_biased_dataset.csv"
         if not os.path.exists(orig_file):
-            return f"❌ Original dataset '{original_dataset}' not found."
+            return f" Original dataset '{original_dataset}' not found."
         
         if synthetic_dataset is None:
             synth_file = f"/tmp/{original_dataset}_fair_synthetic.csv"
@@ -480,19 +480,19 @@ def validate_synthetic_quality(original_dataset: str, synthetic_dataset: str = N
             synth_file = f"/tmp/{synthetic_dataset}"
         
         if not os.path.exists(synth_file):
-            return f"❌ Synthetic dataset not found. Generate it first."
+            return f" Synthetic dataset not found. Generate it first."
         
         orig_data = pd.read_csv(orig_file)
         synth_data = pd.read_csv(synth_file)
         
         validation_report = []
-        validation_report.append(f"🔍 Synthetic Data Quality Validation")
+        validation_report.append(f" Synthetic Data Quality Validation")
         validation_report.append("=" * 50)
         validation_report.append(f"Original: {len(orig_data):,} rows, {len(orig_data.columns)} columns")
         validation_report.append(f"Synthetic: {len(synth_data):,} rows, {len(synth_data.columns)} columns")
         
         # 1. Statistical Fidelity
-        validation_report.append(f"\n📊 Statistical Fidelity:")
+        validation_report.append(f"\n Statistical Fidelity:")
         numeric_cols = orig_data.select_dtypes(include=[np.number]).columns
         
         fidelity_scores = []
@@ -512,10 +512,10 @@ def validate_synthetic_quality(original_dataset: str, synthetic_dataset: str = N
                 validation_report.append(f"   • {col}: {fidelity_score:.1%} fidelity")
         
         avg_fidelity = np.mean(fidelity_scores) if fidelity_scores else 0
-        validation_report.append(f"   📈 Average fidelity: {avg_fidelity:.1%}")
+        validation_report.append(f"    Average fidelity: {avg_fidelity:.1%}")
         
         # 2. Privacy Analysis
-        validation_report.append(f"\n🔒 Privacy Analysis:")
+        validation_report.append(f"\n Privacy Analysis:")
         
         # Check for exact matches (potential privacy leak)
         exact_matches = 0
@@ -530,7 +530,7 @@ def validate_synthetic_quality(original_dataset: str, synthetic_dataset: str = N
         validation_report.append(f"   • Privacy score: {privacy_score:.1f}/100")
         
         # 3. Utility Preservation
-        validation_report.append(f"\n🎯 Utility Preservation:")
+        validation_report.append(f"\n Utility Preservation:")
         
         if 'outcome' in orig_data.columns and 'outcome' in synth_data.columns:
             # Only compute correlations on numeric columns
@@ -555,7 +555,7 @@ def validate_synthetic_quality(original_dataset: str, synthetic_dataset: str = N
             validation_report.append(f"   • Outcome distribution: {outcome_preservation:.1%} preserved")
         
         # 4. Fairness Validation
-        validation_report.append(f"\n⚖️ Fairness Validation:")
+        validation_report.append(f"\n️ Fairness Validation:")
         
         protected_attrs = ['gender', 'race'] if 'gender' in orig_data.columns else []
         
@@ -573,23 +573,23 @@ def validate_synthetic_quality(original_dataset: str, synthetic_dataset: str = N
         # 5. Overall Assessment
         overall_score = (avg_fidelity + privacy_score/100 + utility_preservation) / 3
         
-        validation_report.append(f"\n🏆 Overall Assessment:")
+        validation_report.append(f"\n Overall Assessment:")
         validation_report.append(f"   • Quality Score: {overall_score:.1%}")
         validation_report.append(f"   • Privacy Level: {'High' if privacy_score > 90 else 'Moderate' if privacy_score > 70 else 'Low'}")
         validation_report.append(f"   • Utility Level: {'High' if utility_preservation > 0.8 else 'Moderate' if utility_preservation > 0.6 else 'Low'}")
         validation_report.append(f"   • Fairness: {'Enhanced' if any('bias reduction' in line for line in validation_report) else 'Preserved'}")
         
         if overall_score > 0.8:
-            validation_report.append(f"   ✅ EXCELLENT - Ready for production use")
+            validation_report.append(f"    EXCELLENT - Ready for production use")
         elif overall_score > 0.6:
-            validation_report.append(f"   ⚠️ GOOD - Minor improvements recommended")
+            validation_report.append(f"   ️ GOOD - Minor improvements recommended")
         else:
-            validation_report.append(f"   ❌ NEEDS IMPROVEMENT - Consider parameter tuning")
+            validation_report.append(f"    NEEDS IMPROVEMENT - Consider parameter tuning")
         
         return "\n".join(validation_report)
         
     except Exception as e:
-        return f"❌ Error validating synthetic data: {str(e)}"
+        return f" Error validating synthetic data: {str(e)}"
 
 def create_production_agent():
     """Create production-ready Strands agent with Bedrock integration."""
@@ -617,41 +617,41 @@ def create_production_agent():
     return agent
 
 if __name__ == "__main__":
-    print("🧬 Adversarial-Aware Synthetic Data Agent (Production)")
+    print(" Adversarial-Aware Synthetic Data Agent (Production)")
     print("=" * 60)
-    print("🤖 Powered by AWS Bedrock Claude 4 Sonnet")
-    print("⚖️ Advanced fairness and privacy capabilities")
-    print("🔒 Differential privacy and bias mitigation")
+    print(" Powered by AWS Bedrock Claude 4 Sonnet")
+    print("️ Advanced fairness and privacy capabilities")
+    print(" Differential privacy and bias mitigation")
     print("=" * 60)
     
     try:
-        print("🔄 Initializing Bedrock connection...")
+        print(" Initializing Bedrock connection...")
         agent = create_production_agent()
-        print("✅ Production agent ready!")
+        print(" Production agent ready!")
         
-        print("\n💬 I'm your AI expert for adversarial-aware synthetic data generation.")
-        print("🎯 I can help you create fair, private, and high-quality synthetic data.")
-        print("\n📋 Try asking me to:")
+        print("\n I'm your AI expert for adversarial-aware synthetic data generation.")
+        print(" I can help you create fair, private, and high-quality synthetic data.")
+        print("\n Try asking me to:")
         print("   • 'Create a biased loan dataset to demonstrate fairness issues'")
         print("   • 'Audit the dataset for discrimination'")
         print("   • 'Generate fair synthetic data with privacy protection'")
         print("   • 'Validate the quality of synthetic data'")
         
         print(f"\n{'='*60}")
-        print("🚀 Ready for your hackathon demo conversation!")
+        print(" Ready for your hackathon demo conversation!")
         print(f"{'='*60}")
         
         # Interactive conversation loop
         while True:
             try:
-                user_input = input("\n🧬 You: ").strip()
+                user_input = input("\n You: ").strip()
                 if user_input.lower() in ['exit', 'quit', 'bye', 'stop']:
-                    print("👋 Thank you for using the Adversarial-Aware Synthetic Data Agent!")
-                    print("🏆 Go crush that hackathon!")
+                    print(" Thank you for using the Adversarial-Aware Synthetic Data Agent!")
+                    print(" Go crush that hackathon!")
                     break
                 
                 if user_input:
-                    print(f"\n🤖 AI Agent: ", end="", flush=True)
+                    print(f"\n AI Agent: ", end="", flush=True)
                     try:
                         response = agent(user_input)
                         print(response)
@@ -660,28 +660,28 @@ if __name__ == "__main__":
                         print("Let me try a different approach or ask for clarification.")
                         
             except KeyboardInterrupt:
-                print("\n👋 Thank you for using the Adversarial-Aware Synthetic Data Agent!")
+                print("\n Thank you for using the Adversarial-Aware Synthetic Data Agent!")
                 break
             except Exception as e:
                 print(f"\nError: {e}")
                 
     except Exception as e:
-        print(f"❌ Failed to initialize production agent: {e}")
-        print("💡 Falling back to demo mode...")
+        print(f" Failed to initialize production agent: {e}")
+        print(" Falling back to demo mode...")
         
         # Fallback to demo mode if Bedrock fails
         from strands_demo import create_demo_agent
         demo_agent = create_demo_agent()
         
         if callable(demo_agent):
-            print("🎯 Demo mode active - try the tools directly!")
+            print(" Demo mode active - try the tools directly!")
             while True:
                 try:
-                    user_input = input("\n🧬 You: ").strip()
+                    user_input = input("\n You: ").strip()
                     if user_input.lower() in ['exit', 'quit', 'bye']:
                         break
                     if user_input:
                         response = demo_agent(user_input)
-                        print(f"\n🤖 Demo Agent: {response}")
+                        print(f"\n Demo Agent: {response}")
                 except KeyboardInterrupt:
                     break

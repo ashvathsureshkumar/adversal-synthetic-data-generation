@@ -20,10 +20,10 @@ from strands_bedrock_agent import (
 def demo_complete_workflow_with_cloud():
     """Demo the complete synthetic data workflow using real cloud storage."""
     
-    print("🧬 Adversarial-Aware Synthetic Data Generation Demo")
-    print("🌐 NOW USING REAL CLOUD STORAGE!")
+    print("Adversarial-Aware Synthetic Data Generation Demo")
+    print("NOW USING REAL CLOUD STORAGE!")
     print("=" * 60)
-    print("☁️ AWS S3 + 🗄️ Neo4j Aura + 🔍 Weaviate Integration")
+    print("AWS S3 + Neo4j Aura + Weaviate Integration")
     print("=" * 60)
     
     # Step 1: Create a biased dataset (stored in S3)
@@ -73,17 +73,17 @@ def demo_complete_workflow_with_cloud():
     print(result4)
     
     print(f"\n{'='*60}")
-    print("🎉 CLOUD-POWERED WORKFLOW COMPLETE!")
+    print("CLOUD-POWERED WORKFLOW COMPLETE!")
     print("=" * 60)
-    print("✅ Demonstrated complete cloud-native synthetic data pipeline")
-    print("☁️ Real AWS S3 storage and retrieval")
-    print("🗄️ Real Neo4j Aura lineage tracking") 
-    print("🔍 Real Weaviate vector embeddings")
-    print("🔒 Privacy protection with differential privacy")
-    print("⚖️ Fairness constraints applied successfully")
-    print("📊 Quality validation confirms utility preservation")
+    print("Demonstrated complete cloud-native synthetic data pipeline")
+    print("Real AWS S3 storage and retrieval")
+    print("Real Neo4j Aura lineage tracking") 
+    print("Real Weaviate vector embeddings")
+    print("Privacy protection with differential privacy")
+    print("Fairness constraints applied successfully")
+    print("Quality validation confirms utility preservation")
     print("=" * 60)
-    print("🏆 Your hackathon demo is ENTERPRISE-GRADE!")
+    print("Your hackathon demo is ENTERPRISE-GRADE!")
 
 if __name__ == "__main__":
     demo_complete_workflow_with_cloud()

@@ -28,7 +28,7 @@ from aws.s3_manager import S3Manager
 def test_aws_s3_actual_storage():
     """Test actual storage and retrieval from AWS S3"""
     
-    print("☁️ Testing ACTUAL AWS S3 Storage & Retrieval")
+    print("️ Testing ACTUAL AWS S3 Storage & Retrieval")
     print("-" * 50)
     
     try:
@@ -59,9 +59,9 @@ def test_aws_s3_actual_storage():
         upload_success = s3_manager.upload_file(local_file, s3_key)
         
         if upload_success:
-            print(f"   ✅ Successfully uploaded to s3://{bucket_name}/{s3_key}")
+            print(f"    Successfully uploaded to s3://{bucket_name}/{s3_key}")
         else:
-            print(f"   ❌ Failed to upload to S3")
+            print(f"    Failed to upload to S3")
             return False
         
         # Test 2: Retrieve from S3
@@ -74,13 +74,13 @@ def test_aws_s3_actual_storage():
             downloaded_data = pd.read_csv(download_file)
             
             if len(downloaded_data) == len(test_data):
-                print(f"   ✅ Successfully downloaded {len(downloaded_data)} rows")
-                print(f"   ✅ Data integrity verified")
+                print(f"    Successfully downloaded {len(downloaded_data)} rows")
+                print(f"    Data integrity verified")
             else:
-                print(f"   ❌ Data corruption: {len(downloaded_data)} vs {len(test_data)} rows")
+                print(f"    Data corruption: {len(downloaded_data)} vs {len(test_data)} rows")
                 return False
         else:
-            print(f"   ❌ Failed to download from S3")
+            print(f"    Failed to download from S3")
             return False
         
         # Test 3: List files in bucket
@@ -91,30 +91,30 @@ def test_aws_s3_actual_storage():
             response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix='integration-tests/')
             
             if 'Contents' in response:
-                print(f"   ✅ Found {len(response['Contents'])} files in integration-tests/")
+                print(f"    Found {len(response['Contents'])} files in integration-tests/")
                 for obj in response['Contents'][:3]:  # Show first 3
                     print(f"      - {obj['Key']} ({obj['Size']} bytes)")
             else:
                 print(f"   ℹ️ No files found in integration-tests/ (first upload)")
         
         except Exception as e:
-            print(f"   ⚠️ Could not list bucket contents: {e}")
+            print(f"   ️ Could not list bucket contents: {e}")
         
         # Cleanup
         os.remove(local_file)
         os.remove(download_file)
         
-        print("   🧹 Cleaned up local files")
+        print("    Cleaned up local files")
         return True
         
     except Exception as e:
-        print(f"   ❌ AWS S3 integration failed: {e}")
+        print(f"    AWS S3 integration failed: {e}")
         return False
 
 def test_neo4j_actual_lineage():
     """Test actual lineage storage and retrieval from Neo4j Aura"""
     
-    print("\n🗄️ Testing ACTUAL Neo4j Aura Lineage Storage")
+    print("\n️ Testing ACTUAL Neo4j Aura Lineage Storage")
     print("-" * 50)
     
     try:
@@ -127,10 +127,10 @@ def test_neo4j_actual_lineage():
         )
         
         if not neo4j_manager.connect():
-            print("   ❌ Failed to connect to Neo4j Aura")
+            print("    Failed to connect to Neo4j Aura")
             return False
         
-        print("   ✅ Connected to Neo4j Aura Cloud")
+        print("    Connected to Neo4j Aura Cloud")
         
         # Test 1: Create actual lineage nodes
         print("1. Creating lineage nodes in Neo4j...")
@@ -156,7 +156,7 @@ def test_neo4j_actual_lineage():
                 "timestamp": datetime.now().isoformat()
             }
         )
-        print(f"   ✅ Created dataset node: {dataset_id}")
+        print(f"    Created dataset node: {dataset_id}")
         
         # Create model node
         lineage_tracker.create_model_node(
@@ -167,7 +167,7 @@ def test_neo4j_actual_lineage():
             hyperparameters={"epochs": 10, "batch_size": 32, "learning_rate": 0.0002},
             metadata={"integration_test": True}
         )
-        print(f"   ✅ Created model node: {model_id}")
+        print(f"    Created model node: {model_id}")
         
         # Create generation run
         lineage_tracker.create_generation_run_node(
@@ -180,7 +180,7 @@ def test_neo4j_actual_lineage():
             parameters={"fairness_enabled": True, "privacy_epsilon": 1.0},
             metrics={"quality_score": 0.85, "fairness_score": 0.92}
         )
-        print(f"   ✅ Created run node: {run_id}")
+        print(f"    Created run node: {run_id}")
         
         # Test 2: Retrieve lineage
         print("2. Retrieving lineage from Neo4j...")
@@ -188,17 +188,17 @@ def test_neo4j_actual_lineage():
         lineage = lineage_tracker.get_data_lineage(run_id, depth=3)
         
         if lineage and 'nodes' in lineage:
-            print(f"   ✅ Retrieved lineage with {len(lineage['nodes'])} nodes")
+            print(f"    Retrieved lineage with {len(lineage['nodes'])} nodes")
             
             # Verify our nodes are there
             node_ids = list(lineage['nodes'].keys())
             if dataset_id in node_ids and model_id in node_ids and run_id in node_ids:
-                print(f"   ✅ All created nodes found in lineage")
+                print(f"    All created nodes found in lineage")
             else:
-                print(f"   ⚠️ Some nodes missing: {node_ids}")
+                print(f"   ️ Some nodes missing: {node_ids}")
                 
         else:
-            print(f"   ❌ Failed to retrieve lineage")
+            print(f"    Failed to retrieve lineage")
             return False
         
         # Test 3: Query specific nodes
@@ -213,24 +213,24 @@ def test_neo4j_actual_lineage():
                 
                 record = result.single()
                 if record and record['node_count'] == 3:
-                    print(f"   ✅ All 3 nodes confirmed in database")
+                    print(f"    All 3 nodes confirmed in database")
                 else:
-                    print(f"   ⚠️ Expected 3 nodes, found {record['node_count'] if record else 0}")
+                    print(f"   ️ Expected 3 nodes, found {record['node_count'] if record else 0}")
                     
         except Exception as e:
-            print(f"   ⚠️ Query error: {e}")
+            print(f"   ️ Query error: {e}")
         
         neo4j_manager.close()
         return True
         
     except Exception as e:
-        print(f"   ❌ Neo4j integration failed: {e}")
+        print(f"    Neo4j integration failed: {e}")
         return False
 
 def test_weaviate_actual_embeddings():
     """Test actual vector storage and retrieval from Weaviate"""
     
-    print("\n🔍 Testing ACTUAL Weaviate Vector Storage")
+    print("\n Testing ACTUAL Weaviate Vector Storage")
     print("-" * 50)
     
     try:
@@ -239,7 +239,7 @@ def test_weaviate_actual_embeddings():
         weaviate_key = os.getenv('WEAVIATE_API_KEY')
         
         if not weaviate_url or not weaviate_key:
-            print("   ❌ Weaviate credentials not configured")
+            print("    Weaviate credentials not configured")
             return False
         
         print(f"1. Connecting to Weaviate cluster...")
@@ -251,10 +251,10 @@ def test_weaviate_actual_embeddings():
         )
         
         if not client.is_ready():
-            print("   ❌ Weaviate cluster not ready")
+            print("    Weaviate cluster not ready")
             return False
         
-        print("   ✅ Connected to Weaviate cluster")
+        print("    Connected to Weaviate cluster")
         
         # Test 1: Store actual embeddings
         print("2. Storing dataset embeddings...")
@@ -265,7 +265,7 @@ def test_weaviate_actual_embeddings():
             # Get or create collection
             if client.collections.exists("SyntheticDataset"):
                 collection = client.collections.get("SyntheticDataset")
-                print("   ✅ Using existing SyntheticDataset collection")
+                print("    Using existing SyntheticDataset collection")
             else:
                 collection = client.collections.create(
                     name="SyntheticDataset",
@@ -282,7 +282,7 @@ def test_weaviate_actual_embeddings():
                     ],
                     vectorizer_config=Configure.Vectorizer.none()
                 )
-                print("   ✅ Created new SyntheticDataset collection")
+                print("    Created new SyntheticDataset collection")
             
             # Create embeddings for our integration test data
             test_uuid = str(uuid.uuid4())[:8]
@@ -311,7 +311,7 @@ def test_weaviate_actual_embeddings():
                 vector=embeddings
             )
             
-            print(f"   ✅ Stored dataset with UUID: {result}")
+            print(f"    Stored dataset with UUID: {result}")
             
             # Test 2: Query and retrieve
             print("3. Querying stored embeddings...")
@@ -324,11 +324,11 @@ def test_weaviate_actual_embeddings():
             
             if search_results.objects:
                 found_record = search_results.objects[0]
-                print(f"   ✅ Found record: {found_record.properties['name']}")
-                print(f"   ✅ Fairness score: {found_record.properties['fairness_score']}")
-                print(f"   ✅ Quality score: {found_record.properties['quality_score']}")
+                print(f"    Found record: {found_record.properties['name']}")
+                print(f"    Fairness score: {found_record.properties['fairness_score']}")
+                print(f"    Quality score: {found_record.properties['quality_score']}")
             else:
-                print(f"   ❌ Could not retrieve stored record")
+                print(f"    Could not retrieve stored record")
                 return False
             
             # Test 3: Vector similarity search
@@ -346,21 +346,21 @@ def test_weaviate_actual_embeddings():
             )
             
             if similarity_results.objects:
-                print(f"   ✅ Found {len(similarity_results.objects)} similar records")
+                print(f"    Found {len(similarity_results.objects)} similar records")
                 for i, obj in enumerate(similarity_results.objects):
                     distance = obj.metadata.distance if obj.metadata else "unknown"
                     print(f"      {i+1}. {obj.properties['name']} (distance: {distance})")
             else:
-                print(f"   ⚠️ No similar records found")
+                print(f"   ️ No similar records found")
             
             # Test 4: Count total objects
             print("5. Checking total stored objects...")
             
             all_objects = collection.query.fetch_objects(limit=100)
-            print(f"   ✅ Total objects in collection: {len(all_objects.objects)}")
+            print(f"    Total objects in collection: {len(all_objects.objects)}")
             
         except Exception as e:
-            print(f"   ❌ Weaviate operations failed: {e}")
+            print(f"    Weaviate operations failed: {e}")
             return False
         
         finally:
@@ -369,13 +369,13 @@ def test_weaviate_actual_embeddings():
         return True
         
     except Exception as e:
-        print(f"   ❌ Weaviate integration failed: {e}")
+        print(f"    Weaviate integration failed: {e}")
         return False
 
 def test_end_to_end_workflow():
     """Test complete end-to-end workflow using all cloud services"""
     
-    print("\n🔄 Testing END-TO-END Cloud Workflow")
+    print("\n Testing END-TO-END Cloud Workflow")
     print("-" * 50)
     
     try:
@@ -394,7 +394,7 @@ def test_end_to_end_workflow():
             'approved': np.random.choice([0, 1], 50, p=[0.6, 0.4])
         })
         
-        print(f"   ✅ Created dataset with {len(synthetic_data)} records")
+        print(f"    Created dataset with {len(synthetic_data)} records")
         
         # Step 2: Store in S3
         print("2. Storing dataset in AWS S3...")
@@ -407,9 +407,9 @@ def test_end_to_end_workflow():
         
         s3_key = f"e2e-tests/dataset_{test_id}.csv"
         if s3_manager.upload_file(local_file, s3_key):
-            print(f"   ✅ Stored in S3: s3://{bucket_name}/{s3_key}")
+            print(f"    Stored in S3: s3://{bucket_name}/{s3_key}")
         else:
-            print(f"   ❌ Failed to store in S3")
+            print(f"    Failed to store in S3")
             return False
         
         # Step 3: Create lineage in Neo4j
@@ -435,10 +435,10 @@ def test_end_to_end_workflow():
                 metadata={"end_to_end_test": True, "test_id": test_id}
             )
             
-            print(f"   ✅ Created lineage node: {dataset_id}")
+            print(f"    Created lineage node: {dataset_id}")
             neo4j_manager.close()
         else:
-            print(f"   ❌ Failed to connect to Neo4j")
+            print(f"    Failed to connect to Neo4j")
             return False
         
         # Step 4: Store embeddings in Weaviate
@@ -482,10 +482,10 @@ def test_end_to_end_workflow():
                 vector=embedding
             )
             
-            print(f"   ✅ Stored metadata in Weaviate")
+            print(f"    Stored metadata in Weaviate")
             client.close()
         else:
-            print(f"   ❌ Failed to connect to Weaviate")
+            print(f"    Failed to connect to Weaviate")
             return False
         
         # Step 5: Verify complete workflow
@@ -496,32 +496,32 @@ def test_end_to_end_workflow():
         if s3_manager.download_file(s3_key, download_file):
             verified_data = pd.read_csv(download_file)
             if len(verified_data) == len(synthetic_data):
-                print(f"   ✅ S3 storage verified: {len(verified_data)} records")
+                print(f"    S3 storage verified: {len(verified_data)} records")
             else:
-                print(f"   ❌ S3 verification failed")
+                print(f"    S3 verification failed")
                 return False
         else:
-            print(f"   ❌ Could not download from S3")
+            print(f"    Could not download from S3")
             return False
         
         # Cleanup
         os.remove(local_file)
         os.remove(download_file)
         
-        print(f"   ✅ End-to-end workflow completed successfully!")
-        print(f"   📊 Test ID: {test_id}")
-        print(f"   🔗 Data flows: Local → S3 → Neo4j → Weaviate → Verified")
+        print(f"    End-to-end workflow completed successfully!")
+        print(f"    Test ID: {test_id}")
+        print(f"    Data flows: Local → S3 → Neo4j → Weaviate → Verified")
         
         return True
         
     except Exception as e:
-        print(f"   ❌ End-to-end workflow failed: {e}")
+        print(f"    End-to-end workflow failed: {e}")
         return False
 
 def main():
     """Run comprehensive cloud integration tests"""
     
-    print("🧪 COMPREHENSIVE CLOUD INTEGRATION TEST")
+    print(" COMPREHENSIVE CLOUD INTEGRATION TEST")
     print("=" * 60)
     print("Testing ACTUAL storage and retrieval through:")
     print("• AWS S3 (Real bucket operations)")
@@ -547,32 +547,32 @@ def main():
     
     # Summary
     print(f"\n{'='*60}")
-    print("🎯 CLOUD INTEGRATION TEST RESULTS")
+    print(" CLOUD INTEGRATION TEST RESULTS")
     print("=" * 60)
     
     for service, passed in results.items():
-        status = "✅ PASS" if passed else "❌ FAIL"
+        status = " PASS" if passed else " FAIL"
         service_name = service.replace('_', ' ').title()
         print(f"   {service_name}: {status}")
     
     total_passed = sum(results.values())
     total_tests = len(results)
     
-    print(f"\n📊 Overall Result: {total_passed}/{total_tests} tests passed")
+    print(f"\n Overall Result: {total_passed}/{total_tests} tests passed")
     
     if total_passed == total_tests:
-        print("\n🎉 SUCCESS! All cloud services are fully integrated and operational!")
-        print("✅ Your synthetic data generator is using REAL cloud storage")
-        print("✅ Complete data lineage tracking in Neo4j Aura")
-        print("✅ Vector embeddings stored in Weaviate")
-        print("✅ End-to-end workflow verified")
-        print("\n🏆 HACKATHON READY - Enterprise-grade cloud integration!")
+        print("\n SUCCESS! All cloud services are fully integrated and operational!")
+        print(" Your synthetic data generator is using REAL cloud storage")
+        print(" Complete data lineage tracking in Neo4j Aura")
+        print(" Vector embeddings stored in Weaviate")
+        print(" End-to-end workflow verified")
+        print("\n HACKATHON READY - Enterprise-grade cloud integration!")
     else:
-        print("\n⚠️  Some integrations need attention")
-        print("💡 Check credentials and network connectivity")
+        print("\n️  Some integrations need attention")
+        print(" Check credentials and network connectivity")
         
         if results['aws_s3'] and results['neo4j_aura']:
-            print("✅ Core functionality working - sufficient for demo!")
+            print(" Core functionality working - sufficient for demo!")
 
 if __name__ == "__main__":
     main()

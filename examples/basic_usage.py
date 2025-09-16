@@ -56,7 +56,7 @@ def create_sample_dataset():
 
 def main():
     """Run the basic usage example."""
-    print("🧬 Adversarial-Aware Synthetic Data Generator - Basic Usage Example")
+    print(" Adversarial-Aware Synthetic Data Generator - Basic Usage Example")
     print("=" * 70)
     
     # Create sample dataset
@@ -124,27 +124,27 @@ def main():
     try:
         # Initialize pipeline
         pipeline = SyntheticDataPipeline(str(config_path))
-        print("   ✅ Pipeline initialized successfully")
+        print("    Pipeline initialized successfully")
     except Exception as e:
-        print(f"   ❌ Pipeline initialization failed: {e}")
+        print(f"    Pipeline initialization failed: {e}")
         return
     
     print("\n3. Running data preprocessing...")
     try:
         # Load and preprocess data
         processed_data = pipeline.load_and_preprocess_data(str(data_path))
-        print(f"   ✅ Data preprocessed: {processed_data.shape}")
+        print(f"    Data preprocessed: {processed_data.shape}")
     except Exception as e:
-        print(f"   ❌ Data preprocessing failed: {e}")
+        print(f"    Data preprocessing failed: {e}")
         return
     
     print("\n4. Training model...")
     try:
         # Train model (this will take some time)
         model = pipeline.train_model(processed_data)
-        print("   ✅ Model training completed")
+        print("    Model training completed")
     except Exception as e:
-        print(f"   ❌ Model training failed: {e}")
+        print(f"    Model training failed: {e}")
         return
     
     print("\n5. Generating synthetic data...")
@@ -155,39 +155,39 @@ def main():
             num_samples=1000, 
             original_data=processed_data
         )
-        print(f"   ✅ Generated {len(synthetic_data)} synthetic samples")
+        print(f"    Generated {len(synthetic_data)} synthetic samples")
     except Exception as e:
-        print(f"   ❌ Synthetic data generation failed: {e}")
+        print(f"    Synthetic data generation failed: {e}")
         return
     
     print("\n6. Evaluating quality...")
     try:
         # Evaluate quality
         quality_results = pipeline.evaluate_quality(processed_data, synthetic_data)
-        print(f"   ✅ Quality evaluation completed")
+        print(f"    Quality evaluation completed")
         print(f"   Overall quality score: {quality_results.get('overall_quality', {}).get('overall_score', 'N/A')}")
     except Exception as e:
-        print(f"   ❌ Quality evaluation failed: {e}")
+        print(f"    Quality evaluation failed: {e}")
         quality_results = {}
     
     print("\n7. Running fairness audit...")
     try:
         # Run fairness audit
         fairness_results = pipeline.run_fairness_audit(synthetic_data, ['gender'])
-        print(f"   ✅ Fairness audit completed")
+        print(f"    Fairness audit completed")
         print(f"   Audit passed: {fairness_results.get('audit_passed', 'N/A')}")
     except Exception as e:
-        print(f"   ❌ Fairness audit failed: {e}")
+        print(f"    Fairness audit failed: {e}")
         fairness_results = {}
     
     print("\n8. Running privacy audit...")
     try:
         # Run privacy audit
         privacy_results = pipeline.run_privacy_audit(model, processed_data)
-        print(f"   ✅ Privacy audit completed")
+        print(f"    Privacy audit completed")
         print(f"   Risk score: {privacy_results.get('overall_risk_score', 'N/A')}")
     except Exception as e:
-        print(f"   ❌ Privacy audit failed: {e}")
+        print(f"    Privacy audit failed: {e}")
         privacy_results = {}
     
     # Save results
@@ -207,10 +207,10 @@ def main():
             'privacy_results': privacy_results
         }, f, indent=2, default=str)
     
-    print(f"   ✅ Results saved to: {results_dir}")
+    print(f"    Results saved to: {results_dir}")
     
     print("\n" + "=" * 70)
-    print("🎉 Basic usage example completed successfully!")
+    print(" Basic usage example completed successfully!")
     print("=" * 70)
     
     # Print summary
@@ -218,7 +218,7 @@ def main():
     print(f"• Original data: {df.shape[0]} samples, {df.shape[1]} features")
     print(f"• Synthetic data: {len(synthetic_data)} samples")
     print(f"• Quality score: {quality_results.get('overall_quality', {}).get('overall_score', 'N/A')}")
-    print(f"• Fairness audit: {'✅ Passed' if fairness_results.get('audit_passed') else '❌ Failed'}")
+    print(f"• Fairness audit: {' Passed' if fairness_results.get('audit_passed') else ' Failed'}")
     print(f"• Privacy risk: {privacy_results.get('risk_level', 'Unknown')}")
 
 

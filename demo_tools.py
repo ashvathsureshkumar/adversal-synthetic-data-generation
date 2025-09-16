@@ -20,9 +20,9 @@ from strands_bedrock_agent import (
 def demo_complete_workflow():
     """Demo the complete synthetic data workflow."""
     
-    print("🧬 Adversarial-Aware Synthetic Data Generation Demo")
+    print(" Adversarial-Aware Synthetic Data Generation Demo")
     print("=" * 60)
-    print("🎯 Complete AI-Powered Workflow Demonstration")
+    print(" Complete AI-Powered Workflow Demonstration")
     print("=" * 60)
     
     # Step 1: Create a biased dataset
@@ -72,17 +72,17 @@ def demo_complete_workflow():
     print(result4)
     
     print(f"\n{'='*60}")
-    print("🎉 WORKFLOW COMPLETE!")
+    print(" WORKFLOW COMPLETE!")
     print("=" * 60)
-    print("✅ Demonstrated complete adversarial-aware synthetic data pipeline")
-    print("🔒 Privacy protection with differential privacy")
-    print("⚖️ Fairness constraints applied successfully") 
-    print("📊 Quality validation confirms utility preservation")
-    print("🗄️ Ready for integration with Neo4j lineage tracking")
-    print("☁️ Ready for AWS S3 storage and SageMaker scaling")
-    print("🤖 Ready for full AI agent conversation (after Bedrock setup)")
+    print(" Demonstrated complete adversarial-aware synthetic data pipeline")
+    print(" Privacy protection with differential privacy")
+    print("️ Fairness constraints applied successfully") 
+    print(" Quality validation confirms utility preservation")
+    print("️ Ready for integration with Neo4j lineage tracking")
+    print("️ Ready for AWS S3 storage and SageMaker scaling")
+    print(" Ready for full AI agent conversation (after Bedrock setup)")
     print("=" * 60)
-    print("🏆 Your hackathon demo is COMPLETE and IMPRESSIVE!")
+    print(" Your hackathon demo is COMPLETE and IMPRESSIVE!")
 
 if __name__ == "__main__":
     demo_complete_workflow()

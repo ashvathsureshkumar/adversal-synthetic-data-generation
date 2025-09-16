@@ -13,7 +13,7 @@ from datetime import datetime
 # Add src to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-print("🧬 Complete System Integration Test")
+print(" Complete System Integration Test")
 print("=" * 60)
 
 # Load environment variables
@@ -29,7 +29,7 @@ test_results = {
 }
 
 # Test 1: AWS S3 Integration
-print("1. 🗄️ Testing AWS S3 Integration...")
+print("1. ️ Testing AWS S3 Integration...")
 try:
     import boto3
     s3_client = boto3.client('s3')
@@ -56,25 +56,25 @@ try:
     s3_client.upload_file(test_file, bucket_name, s3_key)
     os.remove(test_file)
     
-    print(f"   ✅ S3 integration working - uploaded to s3://{bucket_name}/{s3_key}")
+    print(f"    S3 integration working - uploaded to s3://{bucket_name}/{s3_key}")
     test_results['aws_s3'] = True
     
 except Exception as e:
-    print(f"   ❌ S3 integration failed: {e}")
+    print(f"    S3 integration failed: {e}")
 
 # Test 2: AWS SageMaker Integration  
-print("\n2. 🤖 Testing AWS SageMaker Integration...")
+print("\n2.  Testing AWS SageMaker Integration...")
 try:
     sagemaker_client = boto3.client('sagemaker')
     response = sagemaker_client.list_training_jobs(MaxResults=1)
-    print(f"   ✅ SageMaker integration working - access verified")
+    print(f"    SageMaker integration working - access verified")
     test_results['aws_sagemaker'] = True
     
 except Exception as e:
-    print(f"   ❌ SageMaker integration failed: {e}")
+    print(f"    SageMaker integration failed: {e}")
 
 # Test 3: Neo4j Integration
-print("\n3. 🗄️ Testing Neo4j Aura Integration...")
+print("\n3. ️ Testing Neo4j Aura Integration...")
 try:
     from databases.neo4j_client import Neo4jManager, DataLineageTracker
     
@@ -100,30 +100,30 @@ try:
         )
         
         neo4j_manager.close()
-        print(f"   ✅ Neo4j integration working - created test lineage: {test_id}")
+        print(f"    Neo4j integration working - created test lineage: {test_id}")
         test_results['neo4j'] = True
     else:
-        print(f"   ❌ Neo4j connection failed")
+        print(f"    Neo4j connection failed")
         
 except Exception as e:
-    print(f"   ❌ Neo4j integration failed: {e}")
+    print(f"    Neo4j integration failed: {e}")
 
 # Test 4: Data Processing Pipeline
-print("\n4. 📊 Testing Data Processing Pipeline...")
+print("\n4.  Testing Data Processing Pipeline...")
 try:
     from data.preprocessor import DataPreprocessor
     
     preprocessor = DataPreprocessor()
     processed_data = preprocessor.fit_transform(test_data)
     
-    print(f"   ✅ Data preprocessing working - shape: {processed_data.shape}")
+    print(f"    Data preprocessing working - shape: {processed_data.shape}")
     test_results['data_processing'] = True
     
 except Exception as e:
-    print(f"   ❌ Data processing failed: {e}")
+    print(f"    Data processing failed: {e}")
 
 # Test 5: Model Components
-print("\n5. 🧠 Testing Model Components...")
+print("\n5.  Testing Model Components...")
 try:
     import torch
     import torch.nn as nn
@@ -142,45 +142,45 @@ try:
     noise = torch.randn(32, 100)
     fake_data = wgan_gp.generator(noise)
     
-    print(f"   ✅ Model components working - generated data shape: {fake_data.shape}")
+    print(f"    Model components working - generated data shape: {fake_data.shape}")
     test_results['model_components'] = True
     
 except Exception as e:
-    print(f"   ❌ Model components failed: {e}")
+    print(f"    Model components failed: {e}")
 
 # Test Summary
 print(f"\n{'='*60}")
-print("🎯 System Integration Test Summary")
+print(" System Integration Test Summary")
 print(f"{'='*60}")
 
 total_tests = len(test_results)
 passed_tests = sum(test_results.values())
 
 for test_name, passed in test_results.items():
-    status = "✅ PASS" if passed else "❌ FAIL"
+    status = " PASS" if passed else " FAIL"
     print(f"   {test_name.replace('_', ' ').title()}: {status}")
 
-print(f"\n📊 Overall Result: {passed_tests}/{total_tests} tests passed")
+print(f"\n Overall Result: {passed_tests}/{total_tests} tests passed")
 
 if passed_tests >= 4:  # Allow for 1 failure
-    print(f"\n🎉 SUCCESS! Your Adversarial Synthetic Data Generator is ready!")
-    print(f"🚀 System Status: HACKATHON READY!")
-    print(f"\n🌟 Key Features Available:")
-    print(f"   ✅ Cloud-scale data storage (AWS S3)")
-    print(f"   ✅ Scalable ML training (AWS SageMaker)")
-    print(f"   ✅ Data lineage tracking (Neo4j Aura)")
-    print(f"   ✅ Advanced data preprocessing")
-    print(f"   ✅ WGAN-GP and cGAN models")
-    print(f"   ✅ Fairness and privacy constraints")
-    print(f"   ✅ Interactive Streamlit dashboard")
-    print(f"\n📱 Dashboard URL: http://localhost:8501")
-    print(f"🌐 S3 Bucket: {os.getenv('AWS_S3_BUCKET')}")
-    print(f"🗄️ Neo4j Database: {os.getenv('NEO4J_DATABASE')}")
+    print(f"\n SUCCESS! Your Adversarial Synthetic Data Generator is ready!")
+    print(f" System Status: HACKATHON READY!")
+    print(f"\n Key Features Available:")
+    print(f"    Cloud-scale data storage (AWS S3)")
+    print(f"    Scalable ML training (AWS SageMaker)")
+    print(f"    Data lineage tracking (Neo4j Aura)")
+    print(f"    Advanced data preprocessing")
+    print(f"    WGAN-GP and cGAN models")
+    print(f"    Fairness and privacy constraints")
+    print(f"    Interactive Streamlit dashboard")
+    print(f"\n Dashboard URL: http://localhost:8501")
+    print(f" S3 Bucket: {os.getenv('AWS_S3_BUCKET')}")
+    print(f"️ Neo4j Database: {os.getenv('NEO4J_DATABASE')}")
     
 else:
-    print(f"\n⚠️  Some components need attention, but core functionality is ready!")
-    print(f"🚀 You can still demo the working components!")
+    print(f"\n️  Some components need attention, but core functionality is ready!")
+    print(f" You can still demo the working components!")
 
 print(f"\n{'='*60}")
-print(f"🎊 Ready to generate adversarial-aware synthetic data!")
+print(f" Ready to generate adversarial-aware synthetic data!")
 print(f"{'='*60}")

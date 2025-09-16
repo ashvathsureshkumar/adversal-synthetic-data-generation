@@ -95,11 +95,11 @@ You'll also need a SageMaker execution role. Go to:
 - Debug model training issues
 
 ### Security Best Practices:
-1. ✅ Use groups instead of direct user policies
-2. ✅ Principle of least privilege
-3. ✅ Regular permission audits
-4. ✅ Monitor CloudTrail for API usage
-5. ✅ Rotate access keys regularly
+1.  Use groups instead of direct user policies
+2.  Principle of least privilege
+3.  Regular permission audits
+4.  Monitor CloudTrail for API usage
+5.  Rotate access keys regularly
 
 ### After Setup:
 1. Add your user to the `AdversarialDataGenerators` group

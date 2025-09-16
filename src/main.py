@@ -681,13 +681,13 @@ def main():
         print(f"Experiment ID: {results['experiment_id']}")
         
         if results['status'] == 'completed':
-            print("✅ Pipeline executed successfully!")
+            print(" Pipeline executed successfully!")
         else:
-            print("❌ Pipeline failed!")
+            print(" Pipeline failed!")
             
     except Exception as e:
         logger.error(f"Pipeline execution failed: {e}")
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ def update_env_file():
     weaviate_url = "https://xfyxantiswcea7wo2qeufw.c0.us-west3.gcp.weaviate.cloud"
     weaviate_api_key = "Uk5wM0k1SXMvVkwwdnlFOV9JcjN2TWVIOGFmUWtqSWhrb2NqbUwzeVdnNXlHZFRzTDh4OFgvV3kxdWVRPV92MjAw"
     
-    print("🔧 Updating environment with Weaviate credentials...")
+    print(" Updating environment with Weaviate credentials...")
     
     # Read current .env file
     env_content = ""
@@ -46,16 +46,16 @@ def update_env_file():
     with open('.env', 'w') as f:
         f.write('\n'.join(updated_lines))
     
-    print("✅ Environment updated successfully!")
-    print(f"🔗 Weaviate URL: {weaviate_url}")
-    print(f"🔑 API Key configured")
-    print(f"🧪 Ready to test connection!")
+    print(" Environment updated successfully!")
+    print(f" Weaviate URL: {weaviate_url}")
+    print(f" API Key configured")
+    print(f" Ready to test connection!")
 
 if __name__ == "__main__":
     update_env_file()
     
     print("\n" + "="*50)
-    print("🎯 Next steps:")
+    print(" Next steps:")
     print("1. Test connection: python test_weaviate_connection.py")
     print("2. If successful, your vector database is ready!")
     print("3. Your AI agent can now store and search embeddings!")

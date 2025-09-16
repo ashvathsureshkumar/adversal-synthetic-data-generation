@@ -8,7 +8,7 @@ import os
 def update_strands_tools():
     """Update the Strands agent tools to use real cloud storage."""
     
-    print("🔧 Updating Strands Agent Tools for Real Cloud Storage")
+    print(" Updating Strands Agent Tools for Real Cloud Storage")
     print("=" * 60)
     
     # Read the current strands_bedrock_agent.py
@@ -42,7 +42,7 @@ def update_strands_tools():
     # 2. Update audit_fairness_violations to check S3 first
     old_audit_pattern = '''filename = f"/tmp/{dataset_name}_biased_dataset.csv"
         if not os.path.exists(filename):
-            return f"❌ Dataset '{dataset_name}' not found. Create it first with create_synthetic_dataset()."
+            return f" Dataset '{dataset_name}' not found. Create it first with create_synthetic_dataset()."
         
         data = pd.read_csv(filename)'''
     
@@ -60,7 +60,7 @@ def update_strands_tools():
         except:
             # Fallback to local file
             if not os.path.exists(filename):
-                return f"❌ Dataset '{dataset_name}' not found. Create it first with create_synthetic_dataset()."
+                return f" Dataset '{dataset_name}' not found. Create it first with create_synthetic_dataset()."
             data = pd.read_csv(filename)'''
     
     content = content.replace(old_audit_pattern, new_audit_pattern)
@@ -68,7 +68,7 @@ def update_strands_tools():
     # 3. Update generate_fair_synthetic_data to use S3
     old_gen_pattern = '''filename = f"/tmp/{source_dataset}_biased_dataset.csv"
         if not os.path.exists(filename):
-            return f"❌ Source dataset '{source_dataset}' not found."
+            return f" Source dataset '{source_dataset}' not found."
         
         data = pd.read_csv(filename)'''
     
@@ -85,7 +85,7 @@ def update_strands_tools():
                 raise Exception("Not in S3")
         except:
             if not os.path.exists(filename):
-                return f"❌ Source dataset '{source_dataset}' not found."
+                return f" Source dataset '{source_dataset}' not found."
             data = pd.read_csv(filename)'''
     
     content = content.replace(old_gen_pattern, new_gen_pattern)
@@ -113,10 +113,10 @@ def update_strands_tools():
     with open('strands_bedrock_agent.py', 'w') as f:
         f.write(content)
     
-    print("✅ Updated Strands agent tools to use real cloud storage")
+    print(" Updated Strands agent tools to use real cloud storage")
     
     # Also update demo_tools.py
-    print("🔧 Updating demo tools...")
+    print(" Updating demo tools...")
     
     # Create a version that uses real storage
     demo_update = '''#!/usr/bin/env python3
@@ -141,10 +141,10 @@ from strands_bedrock_agent import (
 def demo_complete_workflow_with_cloud():
     """Demo the complete synthetic data workflow using real cloud storage."""
     
-    print("🧬 Adversarial-Aware Synthetic Data Generation Demo")
-    print("🌐 NOW USING REAL CLOUD STORAGE!")
+    print(" Adversarial-Aware Synthetic Data Generation Demo")
+    print(" NOW USING REAL CLOUD STORAGE!")
     print("=" * 60)
-    print("☁️ AWS S3 + 🗄️ Neo4j Aura + 🔍 Weaviate Integration")
+    print("️ AWS S3 + ️ Neo4j Aura +  Weaviate Integration")
     print("=" * 60)
     
     # Step 1: Create a biased dataset (stored in S3)
@@ -194,17 +194,17 @@ def demo_complete_workflow_with_cloud():
     print(result4)
     
     print(f"\\n{'='*60}")
-    print("🎉 CLOUD-POWERED WORKFLOW COMPLETE!")
+    print(" CLOUD-POWERED WORKFLOW COMPLETE!")
     print("=" * 60)
-    print("✅ Demonstrated complete cloud-native synthetic data pipeline")
-    print("☁️ Real AWS S3 storage and retrieval")
-    print("🗄️ Real Neo4j Aura lineage tracking") 
-    print("🔍 Real Weaviate vector embeddings")
-    print("🔒 Privacy protection with differential privacy")
-    print("⚖️ Fairness constraints applied successfully")
-    print("📊 Quality validation confirms utility preservation")
+    print(" Demonstrated complete cloud-native synthetic data pipeline")
+    print("️ Real AWS S3 storage and retrieval")
+    print("️ Real Neo4j Aura lineage tracking") 
+    print(" Real Weaviate vector embeddings")
+    print(" Privacy protection with differential privacy")
+    print("️ Fairness constraints applied successfully")
+    print(" Quality validation confirms utility preservation")
     print("=" * 60)
-    print("🏆 Your hackathon demo is ENTERPRISE-GRADE!")
+    print(" Your hackathon demo is ENTERPRISE-GRADE!")
 
 if __name__ == "__main__":
     demo_complete_workflow_with_cloud()
@@ -213,7 +213,7 @@ if __name__ == "__main__":
     with open('demo_tools_cloud.py', 'w') as f:
         f.write(demo_update)
     
-    print("✅ Created cloud-enabled demo tools")
+    print(" Created cloud-enabled demo tools")
 
 def create_verification_script():
     """Create a script to verify data is actually in cloud storage."""
@@ -231,7 +231,7 @@ load_dotenv()
 def verify_cloud_storage():
     """Verify data is actually in cloud storage."""
     
-    print("🔍 Verifying Real Cloud Storage")
+    print(" Verifying Real Cloud Storage")
     print("=" * 40)
     
     # Check S3
@@ -244,37 +244,37 @@ def verify_cloud_storage():
         response = s3_client.list_objects_v2(Bucket=bucket_name)
         
         if 'Contents' in response:
-            print(f"   ✅ Found {len(response['Contents'])} objects in S3:")
+            print(f"    Found {len(response['Contents'])} objects in S3:")
             
             for obj in response['Contents'][:10]:  # Show first 10
                 size_mb = obj['Size'] / (1024*1024)
-                print(f"      📄 {obj['Key']} ({size_mb:.2f} MB)")
+                print(f"       {obj['Key']} ({size_mb:.2f} MB)")
                 
             # Look for our synthetic datasets
             synthetic_files = [obj for obj in response['Contents'] if 'synthetic-datasets' in obj['Key']]
             demo_files = [obj for obj in response['Contents'] if 'demo-datasets' in obj['Key']]
             
-            print(f"   📊 Synthetic datasets: {len(synthetic_files)}")
-            print(f"   🧪 Demo datasets: {len(demo_files)}")
+            print(f"    Synthetic datasets: {len(synthetic_files)}")
+            print(f"    Demo datasets: {len(demo_files)}")
             
         else:
-            print("   ⚠️ No objects found in S3 bucket")
+            print("   ️ No objects found in S3 bucket")
             
     except Exception as e:
-        print(f"   ❌ S3 check failed: {e}")
+        print(f"    S3 check failed: {e}")
     
     # Check recent integration
     print("\\n2. Checking recent integration test...")
     try:
         integration_objects = [obj for obj in response['Contents'] if 'real_integration' in obj['Key']]
         if integration_objects:
-            print(f"   ✅ Found {len(integration_objects)} integration test files:")
+            print(f"    Found {len(integration_objects)} integration test files:")
             for obj in integration_objects:
-                print(f"      📁 {obj['Key']}")
+                print(f"       {obj['Key']}")
         else:
-            print("   ⚠️ No integration test files found")
+            print("   ️ No integration test files found")
     except:
-        print("   ⚠️ Could not check integration files")
+        print("   ️ Could not check integration files")
 
 if __name__ == "__main__":
     verify_cloud_storage()
@@ -283,23 +283,23 @@ if __name__ == "__main__":
     with open('verify_cloud_storage.py', 'w') as f:
         f.write(verification_script)
     
-    print("✅ Created cloud storage verification script")
+    print(" Created cloud storage verification script")
 
 if __name__ == "__main__":
     update_strands_tools()
     create_verification_script()
     
     print(f"\\n{'='*60}")
-    print("🎯 CLOUD INTEGRATION UPDATE COMPLETE!")
+    print(" CLOUD INTEGRATION UPDATE COMPLETE!")
     print("=" * 60)
-    print("✅ Updated all tools to use real cloud storage")
-    print("✅ Created cloud-enabled demo workflow")
-    print("✅ Created verification script")
+    print(" Updated all tools to use real cloud storage")
+    print(" Created cloud-enabled demo workflow")
+    print(" Created verification script")
     print()
-    print("🚀 To test your cloud-enabled system:")
+    print(" To test your cloud-enabled system:")
     print("   1. Run: python demo_tools_cloud.py")
     print("   2. Verify: python verify_cloud_storage.py")
     print("   3. Dashboard: http://localhost:8502")
     print()
-    print("🏆 Your system now uses REAL enterprise cloud storage!")
+    print(" Your system now uses REAL enterprise cloud storage!")
     print("=" * 60)

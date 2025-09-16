@@ -18,14 +18,14 @@ load_dotenv()
 def test_weaviate_v4_connection():
     """Test connection to your new Weaviate cluster using v4 API."""
     
-    print("🗄️ Testing Weaviate Connection (v4 API)")
+    print("️ Testing Weaviate Connection (v4 API)")
     print("=" * 40)
     
     # Get credentials from environment
     weaviate_url = os.getenv('WEAVIATE_URL', 'http://localhost:8080')
     weaviate_key = os.getenv('WEAVIATE_API_KEY')
     
-    print(f"🔗 Connecting to: {weaviate_url}")
+    print(f" Connecting to: {weaviate_url}")
     
     try:
         # Create v4 client
@@ -39,15 +39,15 @@ def test_weaviate_v4_connection():
         
         # Test connection
         if client.is_ready():
-            print("✅ Weaviate cluster is ready!")
+            print(" Weaviate cluster is ready!")
             
             # Get cluster info
             meta = client.get_meta()
-            print(f"📊 Cluster info:")
+            print(f" Cluster info:")
             print(f"   • Version: {meta.get('version', 'Unknown')}")
             
             # Create collection for synthetic datasets
-            print("\n🏗️ Setting up collection for synthetic data...")
+            print("\n️ Setting up collection for synthetic data...")
             
             from weaviate.classes.config import Configure, Property, DataType
             
@@ -73,10 +73,10 @@ def test_weaviate_v4_connection():
                         ],
                         vectorizer_config=Configure.Vectorizer.none()  # We'll add vectors manually
                     )
-                    print("✅ SyntheticDataset collection created")
+                    print(" SyntheticDataset collection created")
                 
                 # Test adding a sample record
-                print("\n🧪 Testing data insertion...")
+                print("\n Testing data insertion...")
                 
                 sample_data = {
                     "name": f"test_dataset_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
@@ -91,22 +91,22 @@ def test_weaviate_v4_connection():
                 
                 # Insert data
                 result = collection.data.insert(sample_data)
-                print(f"✅ Sample record inserted: {result}")
+                print(f" Sample record inserted: {result}")
                 
                 # Test querying
-                print("\n🔍 Testing query functionality...")
+                print("\n Testing query functionality...")
                 
                 query_result = collection.query.fetch_objects(limit=5)
                 
                 datasets = query_result.objects
-                print(f"📊 Found {len(datasets)} datasets in Weaviate")
+                print(f" Found {len(datasets)} datasets in Weaviate")
                 
                 for dataset in datasets:
                     props = dataset.properties
                     print(f"   • {props['name']}: Fairness={props['fairness_score']}, Quality={props['quality_score']}")
                 
                 # Test semantic search capability
-                print("\n🔍 Testing semantic search...")
+                print("\n Testing semantic search...")
                 
                 # For demo, we'll do a simple property-based search
                 search_result = collection.query.fetch_objects(
@@ -114,25 +114,25 @@ def test_weaviate_v4_connection():
                     limit=3
                 )
                 
-                print(f"📈 Found {len(search_result.objects)} high-fairness datasets")
+                print(f" Found {len(search_result.objects)} high-fairness datasets")
                 for dataset in search_result.objects:
                     props = dataset.properties
                     print(f"   • {props['name']}: Fairness={props['fairness_score']}")
                 
-                print("\n🎉 Weaviate integration successful!")
-                print("🚀 Ready for synthetic data embedding and search!")
+                print("\n Weaviate integration successful!")
+                print(" Ready for synthetic data embedding and search!")
                 
             except Exception as e:
-                print(f"⚠️ Collection setup error: {e}")
-                print("🔄 Trying basic connection test...")
+                print(f"️ Collection setup error: {e}")
+                print(" Trying basic connection test...")
                 
         else:
-            print("❌ Weaviate cluster not ready")
+            print(" Weaviate cluster not ready")
             return False
             
     except Exception as e:
-        print(f"❌ Connection failed: {e}")
-        print("💡 Make sure WEAVIATE_URL and WEAVIATE_API_KEY are set correctly")
+        print(f" Connection failed: {e}")
+        print(" Make sure WEAVIATE_URL and WEAVIATE_API_KEY are set correctly")
         return False
     finally:
         try:
@@ -146,21 +146,21 @@ def show_weaviate_usage():
     """Show how Weaviate will be used in the hackathon demo."""
     
     print("\n" + "="*60)
-    print("🎯 Weaviate in Your Hackathon Demo")
+    print(" Weaviate in Your Hackathon Demo")
     print("="*60)
-    print("🗄️ **Vector Database Capabilities:**")
+    print("️ **Vector Database Capabilities:**")
     print("   • Store 768-dimensional embeddings of synthetic datasets")
     print("   • Search for similar datasets by fairness properties")
     print("   • Find optimal privacy parameters for new data")
     print("   • Discover bias patterns across multiple datasets")
     print()
-    print("🧬 **AI Agent Integration:**")
+    print(" **AI Agent Integration:**")
     print("   • 'Find datasets similar to my loan application data'")
     print("   • 'Show me synthetic data with 95%+ fairness scores'")
     print("   • 'What privacy settings work best for healthcare data?'")
     print("   • 'Detect hidden bias patterns in my datasets'")
     print()
-    print("⚡ **Real-time Capabilities:**")
+    print(" **Real-time Capabilities:**")
     print("   • Instant similarity search across 300K+ datasets")
     print("   • Sub-second fairness pattern recognition")
     print("   • Automatic bias detection using vector similarity")
@@ -171,19 +171,19 @@ if __name__ == "__main__":
     
     if success:
         print("\n" + "="*50)
-        print("🎯 Weaviate Integration Complete!")
+        print(" Weaviate Integration Complete!")
         print("="*50)
-        print("✅ Your vector database is operational")
-        print("🔍 Semantic search capabilities enabled")
-        print("⚖️ Fairness pattern detection ready")
-        print("🤖 AI agent integration complete")
-        print("🏆 Ready for hackathon demonstration!")
+        print(" Your vector database is operational")
+        print(" Semantic search capabilities enabled")
+        print("️ Fairness pattern detection ready")
+        print(" AI agent integration complete")
+        print(" Ready for hackathon demonstration!")
         
         show_weaviate_usage()
         
     else:
         print("\n" + "="*50)
-        print("🔧 Troubleshooting:")
+        print(" Troubleshooting:")
         print("   • Check your WEAVIATE_URL in .env")
         print("   • Verify WEAVIATE_API_KEY if using authentication")
         print("   • Ensure cluster is running and accessible")

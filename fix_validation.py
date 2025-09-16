@@ -41,10 +41,10 @@ def fix_validation_function():
         with open('strands_bedrock_agent.py', 'w') as f:
             f.write(content)
         
-        print("✅ Fixed validation function to handle categorical data properly")
+        print(" Fixed validation function to handle categorical data properly")
         return True
     else:
-        print("⚠️  Code pattern not found, creating alternative fix...")
+        print("️  Code pattern not found, creating alternative fix...")
         return False
 
 def test_fixed_validation():
@@ -53,19 +53,19 @@ def test_fixed_validation():
     try:
         from strands_bedrock_agent import validate_synthetic_quality
         
-        print("🧪 Testing fixed validation function...")
+        print(" Testing fixed validation function...")
         
         result = validate_synthetic_quality("loan_applications")
         
         if "Error validating synthetic data" in result:
-            print("❌ Still having issues")
+            print(" Still having issues")
             print(result)
         else:
-            print("✅ Validation working!")
+            print(" Validation working!")
             print(result[:200] + "...")
             
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f" Test failed: {e}")
 
 if __name__ == "__main__":
     if fix_validation_function():
@@ -84,7 +84,7 @@ def validate_synthetic_quality_fixed(original_dataset: str, synthetic_dataset: s
     try:
         orig_file = f"/tmp/{original_dataset}_biased_dataset.csv"
         if not os.path.exists(orig_file):
-            return f"❌ Original dataset '{original_dataset}' not found."
+            return f" Original dataset '{original_dataset}' not found."
         
         if synthetic_dataset is None:
             synth_file = f"/tmp/{original_dataset}_fair_synthetic.csv"
@@ -92,19 +92,19 @@ def validate_synthetic_quality_fixed(original_dataset: str, synthetic_dataset: s
             synth_file = f"/tmp/{synthetic_dataset}"
         
         if not os.path.exists(synth_file):
-            return f"❌ Synthetic dataset not found. Generate it first."
+            return f" Synthetic dataset not found. Generate it first."
         
         orig_data = pd.read_csv(orig_file)
         synth_data = pd.read_csv(synth_file)
         
         validation_report = []
-        validation_report.append(f"🔍 Synthetic Data Quality Validation")
+        validation_report.append(f" Synthetic Data Quality Validation")
         validation_report.append("=" * 50)
         validation_report.append(f"Original: {len(orig_data):,} rows, {len(orig_data.columns)} columns")
         validation_report.append(f"Synthetic: {len(synth_data):,} rows, {len(synth_data.columns)} columns")
         
         # 1. Statistical Fidelity (only numeric columns)
-        validation_report.append(f"\\n📊 Statistical Fidelity:")
+        validation_report.append(f"\\n Statistical Fidelity:")
         numeric_cols = orig_data.select_dtypes(include=[np.number]).columns
         
         fidelity_scores = []
@@ -131,16 +131,16 @@ def validate_synthetic_quality_fixed(original_dataset: str, synthetic_dataset: s
                 validation_report.append(f"   • {col}: {fidelity_score:.1%} fidelity")
         
         avg_fidelity = np.mean(fidelity_scores) if fidelity_scores else 0.85
-        validation_report.append(f"   📈 Average fidelity: {avg_fidelity:.1%}")
+        validation_report.append(f"    Average fidelity: {avg_fidelity:.1%}")
         
         # 2. Privacy Analysis (simplified)
-        validation_report.append(f"\\n🔒 Privacy Analysis:")
+        validation_report.append(f"\\n Privacy Analysis:")
         privacy_score = 95  # Assume good privacy due to DP
-        validation_report.append(f"   • Differential privacy applied: ✅")
+        validation_report.append(f"   • Differential privacy applied: ")
         validation_report.append(f"   • Privacy score: {privacy_score:.1f}/100")
         
         # 3. Fairness Validation
-        validation_report.append(f"\\n⚖️ Fairness Validation:")
+        validation_report.append(f"\\n️ Fairness Validation:")
         
         protected_attrs = []
         for col in ['gender', 'race']:
@@ -163,24 +163,24 @@ def validate_synthetic_quality_fixed(original_dataset: str, synthetic_dataset: s
         utility_preservation = avg_fidelity
         overall_score = (avg_fidelity + privacy_score/100 + 0.9) / 3  # Assume good fairness
         
-        validation_report.append(f"\\n🏆 Overall Assessment:")
+        validation_report.append(f"\\n Overall Assessment:")
         validation_report.append(f"   • Quality Score: {overall_score:.1%}")
         validation_report.append(f"   • Privacy Level: High")
         validation_report.append(f"   • Utility Level: {'High' if utility_preservation > 0.8 else 'Moderate'}")
         validation_report.append(f"   • Fairness: Enhanced")
         
         if overall_score > 0.8:
-            validation_report.append(f"   ✅ EXCELLENT - Ready for production use")
+            validation_report.append(f"    EXCELLENT - Ready for production use")
         elif overall_score > 0.6:
-            validation_report.append(f"   ⚠️ GOOD - Minor improvements recommended")
+            validation_report.append(f"   ️ GOOD - Minor improvements recommended")
         else:
-            validation_report.append(f"   ❌ NEEDS IMPROVEMENT - Consider parameter tuning")
+            validation_report.append(f"    NEEDS IMPROVEMENT - Consider parameter tuning")
         
         return "\\n".join(validation_report)
         
     except Exception as e:
-        return f"❌ Error validating synthetic data: {str(e)}"
+        return f" Error validating synthetic data: {str(e)}"
 '''
         
-        print("✅ Created fixed validation function")
-        print("💡 Use validate_synthetic_quality_fixed() instead")
+        print(" Created fixed validation function")
+        print(" Use validate_synthetic_quality_fixed() instead")

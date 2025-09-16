@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 # Configure page
 st.set_page_config(
     page_title="Adversarial-Aware Synthetic Data Generator",
-    page_icon="⚙️",
+    page_icon="️",
     layout="wide",
     initial_sidebar_state="expanded"
 )

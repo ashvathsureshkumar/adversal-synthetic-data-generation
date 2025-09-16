@@ -1,5 +1,5 @@
 
-# 🧪 Test Data Demo Instructions
+#  Test Data Demo Instructions
 
 ## Quick Demo Sequence (5 minutes):
 
@@ -71,9 +71,9 @@ python test_complete_system.py      # Full integration
 
 ## Key Demo Talking Points:
 
-✅ **"98% bias reduction while preserving 87% data utility"**
-✅ **"Differential privacy with configurable ε parameters"**  
-✅ **"Complete data lineage tracking in Neo4j Aura"**
-✅ **"AI agent powered by AWS Bedrock and Strands"**
-✅ **"Vector similarity search with Weaviate"**
-✅ **"Production-ready cloud-native architecture"**
+ **"98% bias reduction while preserving 87% data utility"**
+ **"Differential privacy with configurable ε parameters"**  
+ **"Complete data lineage tracking in Neo4j Aura"**
+ **"AI agent powered by AWS Bedrock and Strands"**
+ **"Vector similarity search with Weaviate"**
+ **"Production-ready cloud-native architecture"**

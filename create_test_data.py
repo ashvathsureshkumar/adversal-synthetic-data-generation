@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 def create_realistic_test_datasets():
     """Create multiple realistic test datasets for comprehensive demos."""
     
-    print("🧪 Creating Comprehensive Test Data")
+    print(" Creating Comprehensive Test Data")
     print("=" * 50)
     
     # Dataset 1: Biased Loan Applications
@@ -86,14 +86,14 @@ def create_realistic_test_datasets():
     })
     
     loan_data.to_csv('test_data/biased_loan_applications.csv', index=False)
-    print(f"   ✅ Created {len(loan_data)} biased loan applications")
+    print(f"    Created {len(loan_data)} biased loan applications")
     
     # Analyze bias in created data
     gender_approval = loan_data.groupby('gender')['approved'].mean()
     race_approval = loan_data.groupby('race')['approved'].mean()
     
-    print(f"   📊 Gender bias: {gender_approval['Male']:.1%} (Male) vs {gender_approval['Female']:.1%} (Female)")
-    print(f"   📊 Race bias: {race_approval.max():.1%} (max) vs {race_approval.min():.1%} (min)")
+    print(f"    Gender bias: {gender_approval['Male']:.1%} (Male) vs {gender_approval['Female']:.1%} (Female)")
+    print(f"    Race bias: {race_approval.max():.1%} (max) vs {race_approval.min():.1%} (min)")
     
     # Dataset 2: Healthcare Outcomes (with bias)
     print("\n2. Creating healthcare outcomes dataset...")
@@ -133,7 +133,7 @@ def create_realistic_test_datasets():
     })
     
     healthcare_data.to_csv('test_data/healthcare_outcomes.csv', index=False)
-    print(f"   ✅ Created {len(healthcare_data)} healthcare records")
+    print(f"    Created {len(healthcare_data)} healthcare records")
     
     # Dataset 3: Employment Decisions (with bias)
     print("\n3. Creating employment decisions dataset...")
@@ -180,7 +180,7 @@ def create_realistic_test_datasets():
     })
     
     employment_data.to_csv('test_data/employment_decisions.csv', index=False)
-    print(f"   ✅ Created {len(employment_data)} employment records")
+    print(f"    Created {len(employment_data)} employment records")
     
     # Dataset 4: Small clean dataset for quick testing
     print("\n4. Creating small clean test dataset...")
@@ -196,7 +196,7 @@ def create_realistic_test_datasets():
     })
     
     clean_data.to_csv('test_data/small_clean_dataset.csv', index=False)
-    print(f"   ✅ Created {len(clean_data)} clean records for quick testing")
+    print(f"    Created {len(clean_data)} clean records for quick testing")
 
 def create_test_metadata():
     """Create metadata files for the test datasets."""
@@ -251,13 +251,13 @@ def create_test_metadata():
     with open('test_data/dataset_metadata.json', 'w') as f:
         json.dump(metadata, f, indent=2)
     
-    print("   ✅ Created metadata for all test datasets")
+    print("    Created metadata for all test datasets")
 
 def create_demo_instructions():
     """Create step-by-step demo instructions."""
     
     instructions = """
-# 🧪 Test Data Demo Instructions
+#  Test Data Demo Instructions
 
 ## Quick Demo Sequence (5 minutes):
 
@@ -329,18 +329,18 @@ python test_complete_system.py      # Full integration
 
 ## Key Demo Talking Points:
 
-✅ **"98% bias reduction while preserving 87% data utility"**
-✅ **"Differential privacy with configurable ε parameters"**  
-✅ **"Complete data lineage tracking in Neo4j Aura"**
-✅ **"AI agent powered by AWS Bedrock and Strands"**
-✅ **"Vector similarity search with Weaviate"**
-✅ **"Production-ready cloud-native architecture"**
+ **"98% bias reduction while preserving 87% data utility"**
+ **"Differential privacy with configurable ε parameters"**  
+ **"Complete data lineage tracking in Neo4j Aura"**
+ **"AI agent powered by AWS Bedrock and Strands"**
+ **"Vector similarity search with Weaviate"**
+ **"Production-ready cloud-native architecture"**
 """
     
     with open('test_data/DEMO_INSTRUCTIONS.md', 'w') as f:
         f.write(instructions)
     
-    print("   ✅ Created comprehensive demo instructions")
+    print("    Created comprehensive demo instructions")
 
 if __name__ == "__main__":
     # Create test_data directory
@@ -352,9 +352,9 @@ if __name__ == "__main__":
     create_demo_instructions()
     
     print(f"\n{'='*60}")
-    print("🎉 TEST DATA CREATION COMPLETE!")
+    print(" TEST DATA CREATION COMPLETE!")
     print("=" * 60)
-    print("📁 Created files in test_data/:")
+    print(" Created files in test_data/:")
     print("   • biased_loan_applications.csv (2000 rows)")
     print("   • healthcare_outcomes.csv (1500 rows)")  
     print("   • employment_decisions.csv (1200 rows)")
@@ -362,8 +362,8 @@ if __name__ == "__main__":
     print("   • dataset_metadata.json")
     print("   • DEMO_INSTRUCTIONS.md")
     print()
-    print("🚀 Ready for comprehensive system testing!")
-    print("📋 Next steps:")
+    print(" Ready for comprehensive system testing!")
+    print(" Next steps:")
     print("   1. Run: streamlit run streamlit_demo_app.py")
     print("   2. Test: python demo_tools.py")
     print("   3. Follow: test_data/DEMO_INSTRUCTIONS.md")

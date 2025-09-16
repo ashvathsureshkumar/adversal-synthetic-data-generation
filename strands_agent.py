@@ -82,12 +82,12 @@ def upload_dataset(file_path: str, dataset_name: str = None) -> str:
     try:
         # Validate file exists
         if not os.path.exists(file_path):
-            return f"❌ File not found: {file_path}"
+            return f" File not found: {file_path}"
         
         # Load and validate dataset
         data = pd.read_csv(file_path)
         if data.empty:
-            return f"❌ Dataset is empty: {file_path}"
+            return f" Dataset is empty: {file_path}"
         
         # Generate dataset name if not provided
         if not dataset_name:
@@ -113,16 +113,16 @@ def upload_dataset(file_path: str, dataset_name: str = None) -> str:
                 }
             )
             
-            return f"✅ Dataset '{dataset_name}' uploaded successfully!\n" \
-                   f"📊 Shape: {data.shape}\n" \
-                   f"📋 Columns: {list(data.columns)}\n" \
-                   f"☁️ S3 Location: s3://{os.getenv('AWS_S3_BUCKET')}/{s3_key}\n" \
-                   f"🗄️ Lineage tracked in Neo4j"
+            return f" Dataset '{dataset_name}' uploaded successfully!\n" \
+                   f" Shape: {data.shape}\n" \
+                   f" Columns: {list(data.columns)}\n" \
+                   f"️ S3 Location: s3://{os.getenv('AWS_S3_BUCKET')}/{s3_key}\n" \
+                   f"️ Lineage tracked in Neo4j"
         else:
-            return f"❌ Failed to upload dataset to S3"
+            return f" Failed to upload dataset to S3"
             
     except Exception as e:
-        return f"❌ Error uploading dataset: {str(e)}"
+        return f" Error uploading dataset: {str(e)}"
 
 @tool
 def analyze_dataset(dataset_name: str) -> str:
@@ -142,7 +142,7 @@ def analyze_dataset(dataset_name: str) -> str:
         
         local_path = f"/tmp/{dataset_name}.csv"
         if not s3_manager.download_file(s3_key, local_path):
-            return f"❌ Dataset '{dataset_name}' not found in cloud storage"
+            return f" Dataset '{dataset_name}' not found in cloud storage"
         
         # Load and analyze data
         data = pd.read_csv(local_path)
@@ -183,40 +183,40 @@ def analyze_dataset(dataset_name: str) -> str:
         # Clean up temp file
         os.remove(local_path)
         
-        report = f"📊 Dataset Analysis: {dataset_name}\n"
+        report = f" Dataset Analysis: {dataset_name}\n"
         report += f"{'='*50}\n"
-        report += f"📈 Basic Statistics:\n"
+        report += f" Basic Statistics:\n"
         report += f"  • Rows: {analysis['basic_stats']['rows']:,}\n"
         report += f"  • Columns: {analysis['basic_stats']['columns']}\n"
         report += f"  • Memory Usage: {analysis['basic_stats']['memory_usage']}\n"
         report += f"  • Missing Values: {analysis['basic_stats']['missing_values']}\n\n"
         
-        report += f"🔢 Column Types:\n"
+        report += f" Column Types:\n"
         report += f"  • Numerical: {len(analysis['column_types']['numerical'])} columns\n"
         report += f"  • Categorical: {len(analysis['column_types']['categorical'])} columns\n"
         report += f"  • DateTime: {len(analysis['column_types']['datetime'])} columns\n\n"
         
-        report += f"✨ Data Quality:\n"
+        report += f" Data Quality:\n"
         report += f"  • Duplicate Rows: {analysis['data_quality']['duplicate_rows']}\n"
         report += f"  • Uniqueness: {analysis['data_quality']['unique_ratio']:.2%}\n"
         report += f"  • Completeness: {analysis['data_quality']['completeness']:.1f}%\n\n"
         
         if privacy_sensitive_cols:
-            report += f"🔒 Privacy Considerations:\n"
+            report += f" Privacy Considerations:\n"
             report += f"  • Potentially sensitive columns: {privacy_sensitive_cols}\n"
             report += f"  • Recommendation: Enable differential privacy\n\n"
         
         if fairness_cols:
-            report += f"⚖️ Fairness Considerations:\n"
+            report += f"️ Fairness Considerations:\n"
             report += f"  • Protected attributes detected: {fairness_cols}\n"
             report += f"  • Recommendation: Enable fairness constraints\n\n"
         
-        report += f"🚀 Synthetic Data Generation Readiness: {'🟢 Ready' if analysis['data_quality']['completeness'] > 80 else '🟡 Needs cleaning'}"
+        report += f" Synthetic Data Generation Readiness: {'🟢 Ready' if analysis['data_quality']['completeness'] > 80 else '🟡 Needs cleaning'}"
         
         return report
         
     except Exception as e:
-        return f"❌ Error analyzing dataset: {str(e)}"
+        return f" Error analyzing dataset: {str(e)}"
 
 @tool
 def generate_synthetic_data(
@@ -250,7 +250,7 @@ def generate_synthetic_data(
         
         local_path = f"/tmp/{dataset_name}.csv"
         if not s3_manager.download_file(s3_key, local_path):
-            return f"❌ Dataset '{dataset_name}' not found in cloud storage"
+            return f" Dataset '{dataset_name}' not found in cloud storage"
         
         # Load and preprocess data
         data = pd.read_csv(local_path)
@@ -345,19 +345,19 @@ def generate_synthetic_data(
             os.remove(local_path)
             os.remove(synth_path)
             
-            return f"✅ Synthetic data generated successfully!\n" \
-                   f"🎯 Generation ID: {run_id}\n" \
-                   f"📊 Samples: {num_samples:,}\n" \
-                   f"🤖 Model: {model_type.upper()}\n" \
-                   f"🔒 Privacy: {'✅ Enabled (ε=' + str(privacy_epsilon) + ')' if enable_privacy else '❌ Disabled'}\n" \
-                   f"⚖️ Fairness: {'✅ Enabled' if enable_fairness else '❌ Disabled'}\n" \
-                   f"☁️ Location: s3://{os.getenv('AWS_S3_BUCKET')}/{synth_s3_key}\n" \
-                   f"🗄️ Lineage tracked in Neo4j"
+            return f" Synthetic data generated successfully!\n" \
+                   f" Generation ID: {run_id}\n" \
+                   f" Samples: {num_samples:,}\n" \
+                   f" Model: {model_type.upper()}\n" \
+                   f" Privacy: {' Enabled (ε=' + str(privacy_epsilon) + ')' if enable_privacy else ' Disabled'}\n" \
+                   f"️ Fairness: {' Enabled' if enable_fairness else ' Disabled'}\n" \
+                   f"️ Location: s3://{os.getenv('AWS_S3_BUCKET')}/{synth_s3_key}\n" \
+                   f"️ Lineage tracked in Neo4j"
         else:
-            return f"❌ Failed to upload synthetic data to S3"
+            return f" Failed to upload synthetic data to S3"
             
     except Exception as e:
-        return f"❌ Error generating synthetic data: {str(e)}"
+        return f" Error generating synthetic data: {str(e)}"
 
 @tool
 def get_data_lineage(data_id: str) -> str:
@@ -375,14 +375,14 @@ def get_data_lineage(data_id: str) -> str:
         lineage = lineage_tracker.get_data_lineage(data_id, depth=5)
         
         if not lineage.get('nodes'):
-            return f"❌ No lineage found for data ID: {data_id}"
+            return f" No lineage found for data ID: {data_id}"
         
-        report = f"🔍 Data Lineage Report: {data_id}\n"
+        report = f" Data Lineage Report: {data_id}\n"
         report += f"{'='*50}\n"
         
         # Show nodes in the lineage
         for node_id, node_data in lineage['nodes'].items():
-            report += f"📊 {node_data.get('type', 'Unknown')}: {node_id}\n"
+            report += f" {node_data.get('type', 'Unknown')}: {node_id}\n"
             report += f"   • Name: {node_data.get('name', 'N/A')}\n"
             if 'created_at' in node_data:
                 report += f"   • Created: {node_data['created_at']}\n"
@@ -392,14 +392,14 @@ def get_data_lineage(data_id: str) -> str:
         
         # Show relationships
         if lineage.get('relationships'):
-            report += f"🔗 Relationships:\n"
+            report += f" Relationships:\n"
             for rel in lineage['relationships']:
                 report += f"   • {rel.get('source')} → {rel.get('type')} → {rel.get('target')}\n"
             report += "\n"
         
         # Compliance information
         compliance = lineage_tracker.get_compliance_report()
-        report += f"📋 Compliance Summary:\n"
+        report += f" Compliance Summary:\n"
         report += f"   • Total audits: {compliance.get('total_audits', 0)}\n"
         report += f"   • Privacy audits: {compliance.get('total_privacy_audits', 0)}\n"
         report += f"   • Fairness audits: {compliance.get('total_fairness_audits', 0)}\n"
@@ -407,7 +407,7 @@ def get_data_lineage(data_id: str) -> str:
         return report
         
     except Exception as e:
-        return f"❌ Error retrieving lineage: {str(e)}"
+        return f" Error retrieving lineage: {str(e)}"
 
 @tool
 def list_datasets() -> str:
@@ -425,13 +425,13 @@ def list_datasets() -> str:
         # This is a simplified version - in production you'd list actual S3 objects
         
         # For demo, show some sample information
-        report = f"📂 Available Datasets\n"
+        report = f" Available Datasets\n"
         report += f"{'='*30}\n"
         report += f"ℹ️ Use upload_dataset() to add new datasets\n"
         report += f"ℹ️ Use analyze_dataset() to examine existing datasets\n"
         report += f"ℹ️ Check S3 bucket: {os.getenv('AWS_S3_BUCKET')}\n\n"
         
-        report += f"🔧 Example Usage:\n"
+        report += f" Example Usage:\n"
         report += f"   • Upload: upload_dataset('/path/to/data.csv', 'my_dataset')\n"
         report += f"   • Analyze: analyze_dataset('my_dataset')\n"
         report += f"   • Generate: generate_synthetic_data('my_dataset', 1000)\n"
@@ -439,7 +439,7 @@ def list_datasets() -> str:
         return report
         
     except Exception as e:
-        return f"❌ Error listing datasets: {str(e)}"
+        return f" Error listing datasets: {str(e)}"
 
 def create_synthetic_data_agent():
     """Create and configure the Strands AI agent for synthetic data generation."""
@@ -474,11 +474,11 @@ You help users:
 - Ensure responsible AI practices in synthetic data generation
 
 Key capabilities:
-🔒 Privacy: Use differential privacy to protect individual data points
-⚖️ Fairness: Enforce demographic parity and equalized odds
-🗄️ Lineage: Track complete data provenance in Neo4j
-☁️ Cloud-Scale: Leverage AWS S3 and SageMaker for production workloads
-🤖 Advanced Models: WGAN-GP and Conditional GANs for high-quality synthesis
+ Privacy: Use differential privacy to protect individual data points
+️ Fairness: Enforce demographic parity and equalized odds
+️ Lineage: Track complete data provenance in Neo4j
+️ Cloud-Scale: Leverage AWS S3 and SageMaker for production workloads
+ Advanced Models: WGAN-GP and Conditional GANs for high-quality synthesis
 
 Always prioritize privacy and fairness in your recommendations. Explain technical concepts clearly and provide actionable guidance for responsible synthetic data generation."""
     )
@@ -487,14 +487,14 @@ Always prioritize privacy and fairness in your recommendations. Explain technica
 
 if __name__ == "__main__":
     # Create and run the agent
-    print("🧬 Initializing Adversarial-Aware Synthetic Data Agent...")
+    print(" Initializing Adversarial-Aware Synthetic Data Agent...")
     print("=" * 60)
     
     try:
         agent = create_synthetic_data_agent()
-        print("✅ Agent initialized successfully!")
-        print("💬 You can now chat with the synthetic data generation expert.")
-        print("📋 Try commands like:")
+        print(" Agent initialized successfully!")
+        print(" You can now chat with the synthetic data generation expert.")
+        print(" Try commands like:")
         print("   • 'Help me upload a dataset'")
         print("   • 'Analyze my customer data for privacy risks'") 
         print("   • 'Generate 1000 synthetic samples with fairness constraints'")
@@ -504,22 +504,22 @@ if __name__ == "__main__":
         # Interactive chat loop
         while True:
             try:
-                user_input = input("\n🧬 You: ").strip()
+                user_input = input("\n You: ").strip()
                 if user_input.lower() in ['exit', 'quit', 'bye']:
-                    print("👋 Goodbye! Thanks for using the Synthetic Data Agent!")
+                    print(" Goodbye! Thanks for using the Synthetic Data Agent!")
                     break
                 
                 if user_input:
-                    print(f"\n🤖 Agent: ", end="")
+                    print(f"\n Agent: ", end="")
                     response = agent(user_input)
                     print(response)
                     
             except KeyboardInterrupt:
-                print("\n👋 Goodbye! Thanks for using the Synthetic Data Agent!")
+                print("\n Goodbye! Thanks for using the Synthetic Data Agent!")
                 break
             except Exception as e:
-                print(f"\n❌ Error: {e}")
+                print(f"\n Error: {e}")
                 
     except Exception as e:
-        print(f"❌ Failed to initialize agent: {e}")
-        print("💡 Make sure your AWS credentials and Neo4j connection are configured correctly.")
+        print(f" Failed to initialize agent: {e}")
+        print(" Make sure your AWS credentials and Neo4j connection are configured correctly.")

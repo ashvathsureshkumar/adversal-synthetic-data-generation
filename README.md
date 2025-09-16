@@ -2,19 +2,19 @@
 
 A comprehensive, hackathon-ready synthetic data generator that combines state-of-the-art adversarial training with fairness constraints, privacy preservation, and modern data infrastructure.
 
-## 🚀 Features
+##  Features
 
-- **🧠 Advanced GAN Models**: cGAN/WGAN-GP with gradient penalty for high-quality synthetic tabular data
-- **⚖️ Fairness & Privacy**: Built-in constraints during training to ensure responsible AI
-- **🗄️ Vector Database**: Weaviate integration for embedding storage and similarity search
-- **📊 Graph Database**: Neo4j for comprehensive data lineage tracking and audit trails
-- **☁️ Cloud Ready**: Full AWS integration for scalable training and deployment (SageMaker, S3, EC2)
-- **📱 Interactive Dashboard**: Beautiful Streamlit-powered UI for easy data generation and visualization
-- **🤖 Agent Framework**: Strands Agents SDK integration for workflow automation
-- **🔒 Privacy Preservation**: Differential privacy with comprehensive audit capabilities
-- **📈 Quality Evaluation**: Extensive metrics for synthetic data quality assessment
+- ** Advanced GAN Models**: cGAN/WGAN-GP with gradient penalty for high-quality synthetic tabular data
+- **️ Fairness & Privacy**: Built-in constraints during training to ensure responsible AI
+- **️ Vector Database**: Weaviate integration for embedding storage and similarity search
+- ** Graph Database**: Neo4j for comprehensive data lineage tracking and audit trails
+- **️ Cloud Ready**: Full AWS integration for scalable training and deployment (SageMaker, S3, EC2)
+- ** Interactive Dashboard**: Beautiful Streamlit-powered UI for easy data generation and visualization
+- ** Agent Framework**: Strands Agents SDK integration for workflow automation
+- ** Privacy Preservation**: Differential privacy with comprehensive audit capabilities
+- ** Quality Evaluation**: Extensive metrics for synthetic data quality assessment
 
-## 🏃‍♂️ Quick Start
+## ‍️ Quick Start
 
 ### Option 1: Interactive Dashboard (Recommended)
 ```bash
@@ -46,7 +46,7 @@ pipeline = SyntheticDataPipeline("config/config.yaml")
 results = pipeline.run_complete_pipeline("your_data.csv", num_synthetic_samples=1000)
 ```
 
-## 📋 Prerequisites
+##  Prerequisites
 
 - Python 3.8+
 - Optional: Docker (for Weaviate/Neo4j)
@@ -69,7 +69,7 @@ adversal-synthetic-data/
 └── streamlit_app.py       # Main dashboard application
 ```
 
-## 🔧 Advanced Setup (Optional)
+##  Advanced Setup (Optional)
 
 ### Database Services (For Full Features)
 ```bash
@@ -92,7 +92,7 @@ export AWS_SECRET_ACCESS_KEY=your_secret
 export AWS_DEFAULT_REGION=us-west-2
 ```
 
-## 🎯 Key Components
+##  Key Components
 
 ### 1. **GAN Models** (`src/models/`)
 - **WGAN-GP**: Wasserstein GAN with Gradient Penalty for stable training
@@ -119,7 +119,7 @@ export AWS_DEFAULT_REGION=us-west-2
 - **Real-time Visualization**: Training progress and quality metrics
 - **Fairness Audits**: Built-in bias detection and mitigation tools
 
-## 📊 Example Usage
+##  Example Usage
 
 ### Basic Synthetic Data Generation
 ```python
@@ -160,35 +160,35 @@ config = {
 }
 ```
 
-## 🏆 Hackathon Ready Features
+##  Hackathon Ready Features
 
-- **🚀 Quick Setup**: Get running in under 5 minutes
-- **📱 Beautiful UI**: Professional Streamlit dashboard
-- **🔄 End-to-End**: Complete workflow from upload to download
-- **📊 Rich Visualizations**: Training curves, quality metrics, fairness audits
-- **☁️ Cloud Integration**: Deploy to AWS with one command
-- **🤖 Agent Integration**: Ready for workflow automation
-- **🏆 Demo Ready**: Built-in sample data and configurations
+- ** Quick Setup**: Get running in under 5 minutes
+- ** Beautiful UI**: Professional Streamlit dashboard
+- ** End-to-End**: Complete workflow from upload to download
+- ** Rich Visualizations**: Training curves, quality metrics, fairness audits
+- **️ Cloud Integration**: Deploy to AWS with one command
+- ** Agent Integration**: Ready for workflow automation
+- ** Demo Ready**: Built-in sample data and configurations
 
-## 🛠️ Technology Stack
+## ️ Technology Stack
 
-- **🧠 ML Framework**: PyTorch with GPU support
-- **🗄️ Vector Database**: Weaviate for embeddings
-- **📊 Graph Database**: Neo4j for lineage tracking
-- **☁️ Cloud Platform**: AWS (SageMaker, EC2, S3)
-- **📱 Frontend**: Streamlit with modern UI
-- **🤖 Agent Framework**: Strands Agents SDK
-- **🔒 Privacy**: Opacus for differential privacy
-- **⚖️ Fairness**: Fairlearn and custom implementations
+- ** ML Framework**: PyTorch with GPU support
+- **️ Vector Database**: Weaviate for embeddings
+- ** Graph Database**: Neo4j for lineage tracking
+- **️ Cloud Platform**: AWS (SageMaker, EC2, S3)
+- ** Frontend**: Streamlit with modern UI
+- ** Agent Framework**: Strands Agents SDK
+- ** Privacy**: Opacus for differential privacy
+- **️ Fairness**: Fairlearn and custom implementations
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-## 📄 License
+##  License
 
 MIT License - See [LICENSE](LICENSE) file for details.
 
-## 🎉 Acknowledgments
+##  Acknowledgments
 
-Built for hackathons with ❤️ using state-of-the-art ML and modern data infrastructure.
+Built for hackathons with ️ using state-of-the-art ML and modern data infrastructure.
